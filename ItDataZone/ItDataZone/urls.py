@@ -11,6 +11,8 @@ handler404 = 'apps.user.views.custom_404'
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("apps.main.urls")),
+
     path("api/v1/user/", include("apps.user.urls")),
 
     path("api/token/", TokenObtainPairView.as_view()),

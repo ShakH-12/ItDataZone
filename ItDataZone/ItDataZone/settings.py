@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
-DEBUG = False #config("DEBUG", default=False)
+DEBUG = config("DEBUG", default=False)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
 
 DJANGO_APPS = [
@@ -21,7 +21,8 @@ THIRD_APPS = [
     "corsheaders"
 ]
 LOCAL_APPS = [
-    "apps.user"
+    "apps.user",
+    "apps.main"
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
