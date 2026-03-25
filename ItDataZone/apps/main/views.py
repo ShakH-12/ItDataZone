@@ -5,5 +5,6 @@ from django.views import View
 
 class HomeView(View):
     permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         return render(request, 'main/home.html')
