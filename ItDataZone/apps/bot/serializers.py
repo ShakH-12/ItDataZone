@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, RegisteredUser
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -27,3 +27,14 @@ class ResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+
+class RegisterToCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RegisteredUser
+        fields = ["user", "phone", "course", "course_price"]
+        read_only_fields = ("course_price",)
+
+    def create(self, validated_data):
+        validated_data["course_price"] = validated_data["course"].price
+        return RegisteredUser.objects.create(**validated_data)

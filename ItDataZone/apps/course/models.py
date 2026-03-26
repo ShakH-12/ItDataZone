@@ -21,6 +21,10 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def is_expency(self):
+        return self.price > 250000
+
     def deactivate(self):
         self.is_active = False
         self.save(update_fields=["is_active"])
