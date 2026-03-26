@@ -12,4 +12,4 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(RegisteredUser)
 class RegisteredUserAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "course")
+    list_display = ("user", "full_name", "course",)
