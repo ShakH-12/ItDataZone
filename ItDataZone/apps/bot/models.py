@@ -1,0 +1,33 @@
+from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+
+class User(models.Model):
+    username = models.CharField(max_length=100, verbose_name="Telegram User username", db_index=True, null=True, blank=True)
+    first_name = models.CharField(max_length=100, verbose_name="Telegram User first name", null=True, blank=True)
+    last_name = models.CharField(max_length=100, verbose_name="Telegram User last name", null=True, blank=True)
+    phone = models.CharField(max_length=100, verbose_name="Telegram User phone number", db_index=True, null=True, blank=True)
+    is_active = models.BooleanField(default=True, verbose_name="Is active")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.first_name} - {self.last_name}"
+
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+        ordering = ["-created_at"]
+        indexes = [models.Index(fields=["is_active"])]
+
+    def clean(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def deactivate(self):
+        self.is_active = False
+        self.save(update_fields=["is_active"])
+
+    def activate(self):
+        self.is_active = True
+        self.save(update_fields=["is_active"])

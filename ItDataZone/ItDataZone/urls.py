@@ -14,6 +14,8 @@ urlpatterns = [
     path("", include("apps.main.urls")),
 
     path("api/v1/user/", include("apps.user.urls")),
+    path("api/v1/bot/", include("apps.bot.urls")),
+    path("api/v1/course/", include("apps.course.urls")),
 
     path("api/token/", TokenObtainPairView.as_view()),
     path("api/refresh/", TokenRefreshView.as_view()),
