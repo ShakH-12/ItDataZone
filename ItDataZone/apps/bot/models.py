@@ -35,6 +35,7 @@ class User(models.Model):
 
 class RegisteredUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User", db_index=True)
+    full_name = models.CharField(max_length=100, verbose_name="Full name", db_index=True)
     phone = models.CharField(max_length=100, verbose_name="Telegram User phone number", db_index=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Course", db_index=True)
     course_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Course Price", db_index=True)
@@ -48,7 +49,7 @@ class RegisteredUser(models.Model):
         verbose_name = "Registered User"
         verbose_name_plural = "Registered Users"
         ordering = ["-created_at"]
-        indexes = [models.Index(fields=["user", "course"])]
+        indexes = [models.Index(fields=["user", "full_name", "phone", "course"])]
 
     def clean(self, *args, **kwargs):
         self.full_clean()

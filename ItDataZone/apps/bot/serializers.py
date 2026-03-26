@@ -32,7 +32,7 @@ class ResponseSerializer(serializers.ModelSerializer):
 class RegisterToCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegisteredUser
-        fields = ["user", "phone", "course", "course_price"]
+        fields = ["user", "full_name", "phone", "course", "course_price"]
         read_only_fields = ("course_price",)
 
     def create(self, validated_data):
