@@ -1,13 +1,598 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Data Zone — Курсы</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --card: #141419;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #4f6ef7;
+    --accent2: #7c9bff;
+    --accent-glow: rgba(79,110,247,0.15);
+    --text: #f0f0f8;
+    --muted: #7a7a8e;
+    --muted2: #a0a0b2;
+    --success: #22c97a;
+    --tag-bg: rgba(79,110,247,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--text);
+  }
+  .nav-logo span { color: var(--accent2); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-link {
+    font-size: 14px; color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    background: var(--accent);
+    color: #fff; border: none; cursor: pointer;
+    padding: 7px 16px; border-radius: 8px;
+    transition: opacity .2s;
+  }
+  .nav-btn:hover { opacity: .85; }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+  }
+  .hero-left { flex: 1; min-width: 260px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--tag-bg);
+    border: 1px solid rgba(79,110,247,0.2);
+    color: var(--accent2);
+    font-size: 12px; font-weight: 500; letter-spacing: .5px;
+    padding: 4px 12px; border-radius: 20px; margin-bottom: 1.2rem;
+    text-transform: uppercase;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: .8rem;
+  }
+  h1 span {
+    background: linear-gradient(135deg, var(--accent2), #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub { font-size: 16px; color: var(--muted2); line-height: 1.6; max-width: 480px; }
+  .hero-stats {
+    display: flex; gap: 2rem; flex-shrink: 0;
+    padding-bottom: 4px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    color: var(--text); line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    max-width: 1100px; margin: 0 auto 2.5rem;
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 400;
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--muted2); cursor: pointer;
+    padding: 7px 16px; border-radius: 20px;
+    transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent2); }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .search-wrap {
+    margin-left: auto;
+    position: relative;
+  }
+  .search-wrap svg {
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); pointer-events: none;
+  }
+  .search-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    padding: 8px 12px 8px 34px;
+    border-radius: 8px; width: 220px;
+    outline: none; transition: border-color .2s;
+  }
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: var(--accent); }
+
+  /* GRID */
+  .courses-grid {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 2rem 6rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  /* CARD */
+  .course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+    display: flex; flex-direction: column;
+  }
+  .course-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(79,110,247,0.3);
+    box-shadow: 0 12px 40px rgba(79,110,247,0.08);
+  }
+  .card-img {
+    width: 100%; height: 180px;
+    object-fit: cover;
+    background: var(--bg3);
+    display: block;
+  }
+  .card-img-placeholder {
+    width: 100%; height: 180px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-img-placeholder svg { opacity: .3; }
+  .card-body { padding: 1.2rem 1.3rem 1.3rem; flex: 1; display: flex; flex-direction: column; }
+  .card-meta {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .badge-active {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 9px; border-radius: 20px;
+    background: rgba(34,201,122,0.12);
+    color: var(--success);
+    border: 1px solid rgba(34,201,122,0.2);
+    letter-spacing: .3px;
+  }
+  .badge-inactive {
+    font-size: 11px; font-weight: 500;
+    padding: 3px 9px; border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .card-date { font-size: 11px; color: var(--muted); margin-left: auto; }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px; font-weight: 700;
+    line-height: 1.3; margin-bottom: 8px;
+    color: var(--text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-desc {
+    font-size: 13px; color: var(--muted2); line-height: 1.6;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: .9rem; margin-top: auto;
+  }
+  .card-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800;
+    color: var(--text);
+  }
+  .card-price span { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 2px; }
+  .card-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    background: var(--accent);
+    color: #fff; border: none; cursor: pointer;
+    padding: 8px 18px; border-radius: 8px;
+    transition: opacity .2s, transform .15s;
+  }
+  .card-btn:hover { opacity: .85; transform: scale(1.03); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(5,5,10,0.85);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    max-width: 600px; width: 100%;
+    max-height: 88vh; overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform .3s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-img {
+    width: 100%; height: 220px;
+    object-fit: cover; display: block;
+    border-radius: 20px 20px 0 0;
+  }
+  .modal-img-placeholder {
+    width: 100%; height: 220px;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 20px 20px 0 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-img-placeholder svg { opacity: .25; }
+  .modal-body { padding: 1.8rem 2rem 2rem; }
+  .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    line-height: 1.2; color: var(--text); flex: 1;
+  }
+  .modal-close {
+    background: var(--bg3); border: 1px solid var(--border2);
+    color: var(--muted); cursor: pointer;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0; transition: all .2s;
+  }
+  .modal-close:hover { color: var(--text); border-color: var(--accent); }
+  .modal-desc {
+    font-size: 14px; color: var(--muted2); line-height: 1.7; margin-bottom: 1.5rem;
+  }
+  .modal-info-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem;
+  }
+  .modal-info-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: .75rem 1rem;
+  }
+  .modal-info-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+  .modal-info-val { font-size: 15px; font-weight: 500; color: var(--text); }
+  .modal-actions { display: flex; gap: 10px; }
+  .modal-buy {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    background: var(--accent); color: #fff;
+    border: none; cursor: pointer;
+    flex: 1; padding: 12px; border-radius: 10px;
+    transition: opacity .2s;
+  }
+  .modal-buy:hover { opacity: .85; }
+  .modal-cancel {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 400;
+    background: transparent; color: var(--muted2);
+    border: 1px solid var(--border2); cursor: pointer;
+    padding: 12px 20px; border-radius: 10px;
+    transition: all .2s;
+  }
+  .modal-cancel:hover { border-color: var(--accent); color: var(--text); }
+
+  /* LOADER & EMPTY */
+  .state-box {
+    grid-column: 1/-1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 4rem 1rem; gap: 1rem; color: var(--muted);
+  }
+  .spinner {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border2);
+    border-top-color: var(--accent);
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ERROR TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 300;
+    background: #2a1818; border: 1px solid rgba(255,80,80,0.3);
+    color: #ff8080; font-size: 13px;
+    padding: .75rem 1.2rem; border-radius: 10px;
+    transform: translateY(100px); opacity: 0;
+    transition: all .3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2rem; }
+    .hero-stats { gap: 1.2rem; }
+    .filter-bar { padding: 0 1rem; }
+    .courses-grid { padding: 0 1rem 4rem; }
+    .search-wrap { width: 100%; }
+    .search-input { width: 100%; }
+    nav { padding: 0 1rem; }
+    .modal-body { padding: 1.2rem 1.2rem 1.5rem; }
+    .modal-info-row { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-    <h1>shaxcoder</h1>
+
+<nav>
+  <div class="nav-logo">IT <span>Data</span> Zone</div>
+  <div class="nav-right">
+    <a class="nav-link" href="#">О нас</a>
+    <a class="nav-link" href="#">Контакты</a>
+    <button class="nav-btn">Войти</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Онлайн-обучение</div>
+    <h1>Прокачай навыки<br>в <span>IT сфере</span></h1>
+    <p class="hero-sub">Профессиональные курсы по программированию, аналитике данных и разработке. Учись у практикующих специалистов.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-count">—</div>
+      <div class="stat-label">курсов</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">онлайн</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">доступ</div>
+    </div>
+  </div>
+</section>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">Все</button>
+  <button class="filter-btn" data-filter="active">Активные</button>
+  <button class="filter-btn" data-filter="inactive">Неактивные</button>
+  <div class="search-wrap">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" type="text" id="searchInput" placeholder="Поиск курса...">
+  </div>
+</div>
+
+<div class="courses-grid" id="grid">
+  <div class="state-box"><div class="spinner"></div><span>Загружаем курсы...</span></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// const API = "http://127.0.0.1:8000/api/v1/course/" //'https://qitcompany.pythonanywhere.com/api/v1/courses/';
+const API = 'https://qitcompany.pythonanywhere.com/api/v1/course/';
+const MEDIA = 'http://127.0.0.1:8000';
+
+let allCourses = [];
+let currentFilter = 'all';
+let searchVal = '';
+
+async function loadCourses() {
+  try {
+    const r = await fetch(API);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    allCourses = Array.isArray(data) ? data : (data.results || []);
+    document.getElementById('stat-count').textContent = allCourses.length;
+    render();
+  } catch(e) {
+    showToast('Не удалось загрузить курсы. Проверь CORS и запущен ли сервер.');
+    document.getElementById('grid').innerHTML = `<div class="state-box">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:var(--muted)">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+      </svg>
+      <span>Сервер недоступен</span>
+      <span style="font-size:12px">Запусти: python manage.py runserver</span>
+    </div>`;
+  }
+}
+
+function render() {
+  let list = allCourses;
+  if (currentFilter === 'active') list = list.filter(c => c.is_active);
+  if (currentFilter === 'inactive') list = list.filter(c => !c.is_active);
+  if (searchVal) {
+    const s = searchVal.toLowerCase();
+    list = list.filter(c => c.name.toLowerCase().includes(s) || c.description.toLowerCase().includes(s));
+  }
+
+  const grid = document.getElementById('grid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="state-box"><span>Курсы не найдены</span></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(c => cardHTML(c)).join('');
+  grid.querySelectorAll('.course-card').forEach(el => {
+    el.addEventListener('click', () => openModal(+el.dataset.id));
+  });
+}
+
+function imgHTML(photo, cls, ph_cls) {
+  if (photo) {
+    const src = photo.startsWith('http') ? photo : MEDIA + photo;
+    return `<img class="${cls}" src="${src}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="${ph_cls}" style="display:none">${courseIcon()}</div>`;
+  }
+  return `<div class="${ph_cls}">${courseIcon()}</div>`;
+}
+
+function courseIcon() {
+  return `<svg width="48" height="48" fill="none" stroke="#4f6ef7" stroke-width="1.5" viewBox="0 0 24 24">
+    <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+  </svg>`;
+}
+
+function formatPrice(p) {
+  const n = parseFloat(p);
+  if (n === 0) return 'Бесплатно';
+  return n.toLocaleString('ru-RU') + ' ₸';
+}
+
+function formatDate(d) {
+  return new Date(d).toLocaleDateString('ru-RU', {day:'2-digit', month:'short', year:'numeric'});
+}
+
+function cardHTML(c) {
+  return `<div class="course-card" data-id="${c.id}">
+    ${imgHTML(c.photo, 'card-img', 'card-img-placeholder')}
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="${c.is_active ? 'badge-active' : 'badge-inactive'}">${c.is_active ? 'Активен' : 'Неактивен'}</span>
+        <span class="card-date">${formatDate(c.created_at)}</span>
+      </div>
+      <div class="card-title">${esc(c.name)}</div>
+      <div class="card-desc">${esc(c.description)}</div>
+      <div class="card-footer">
+        <div class="card-price">${formatPrice(c.price)}</div>
+        <button class="card-btn">Подробнее</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openModal(id) {
+  const c = allCourses.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('modalContent').innerHTML = `
+    ${imgHTML(c.photo, 'modal-img', 'modal-img-placeholder')}
+    <div class="modal-body">
+      <div class="modal-head">
+        <div class="modal-title">${esc(c.name)}</div>
+        <button class="modal-close" id="modalCloseBtn">✕</button>
+      </div>
+      <div class="modal-desc">${esc(c.description)}</div>
+      <div class="modal-info-row">
+        <div class="modal-info-item">
+          <div class="modal-info-label">Стоимость</div>
+          <div class="modal-info-val">${formatPrice(c.price)}</div>
+        </div>
+        <div class="modal-info-item">
+          <div class="modal-info-label">Статус</div>
+          <div class="modal-info-val" style="color:${c.is_active ? 'var(--success)' : 'var(--muted)'}">${c.is_active ? 'Активен' : 'Неактивен'}</div>
+        </div>
+        <div class="modal-info-item">
+          <div class="modal-info-label">Добавлен</div>
+          <div class="modal-info-val">${formatDate(c.created_at)}</div>
+        </div>
+        <div class="modal-info-item">
+          <div class="modal-info-label">Обновлён</div>
+          <div class="modal-info-val">${formatDate(c.updated_at)}</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-buy">Записаться на курс</button>
+        <button class="modal-cancel" id="modalCancelBtn">Закрыть</button>
+      </div>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('modalCloseBtn').onclick = closeModal;
+  document.getElementById('modalCancelBtn').onclick = closeModal;
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchVal = e.target.value;
+  render();
+});
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+loadCourses();
+</script>
 </body>
 </html>
