@@ -50,7 +50,3 @@ class RegisteredUser(models.Model):
         verbose_name_plural = "Registered Users"
         ordering = ["-created_at"]
         indexes = [models.Index(fields=["user", "full_name", "phone", "course"])]
-
-    def clean(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
