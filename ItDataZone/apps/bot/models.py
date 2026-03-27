@@ -18,7 +18,7 @@ class User(models.Model):
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
-        ordering = ["-created_at"]
+        ordering = ["-updated_at"]
         indexes = [models.Index(fields=["is_active"])]
 
     # def clean(self, *args, **kwargs):
