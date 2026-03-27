@@ -31,3 +31,8 @@ class RegisterToCourseView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response(RegisterToCourseSerializer(user).data)
+
+
+class StaffUserListView(generics.ListAPIView):
+    queryset = User.objects.filter(is_active=True, is_staff=True)
+    serializer_class = ResponseSerializer

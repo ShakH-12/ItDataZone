@@ -21,9 +21,9 @@ class User(models.Model):
         ordering = ["-created_at"]
         indexes = [models.Index(fields=["is_active"])]
 
-    def clean(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
+    # def clean(self, *args, **kwargs):
+    #     self.full_clean()
+    #     super().save(*args, **kwargs)
 
     def deactivate(self):
         self.is_active = False
