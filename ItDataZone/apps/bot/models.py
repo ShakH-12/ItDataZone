@@ -8,6 +8,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=100, verbose_name="Telegram User last name", null=True, blank=True)
     phone = models.CharField(max_length=100, verbose_name="Telegram User phone number", db_index=True, null=True, blank=True)
     is_active = models.BooleanField(default=True, verbose_name="Is active")
+    is_staff = models.BooleanField(default=False, verbose_name="Is staff")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
