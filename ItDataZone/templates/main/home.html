@@ -126,7 +126,7 @@
 
     .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 6vw 80px; overflow: hidden; z-index: 1; }
     .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(46,204,113,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(46,204,113,0.04) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 80% 80% at 40% 50%, black 20%, transparent 100%); pointer-events: none; }
-    .hero-hex { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; opacity: 0.08; pointer-events: none; animation: hexRotate 30s linear infinite; }
+    .hero-hex { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; opacity: 1; pointer-events: none; animation: hexRotate 30s linear infinite; color: white; }
     @keyframes hexRotate { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
     .hero-blob { position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(46,204,113,0.1) 0%, transparent 65%); top: -150px; right: -150px; border-radius: 50%; pointer-events: none; animation: blobFloat 9s ease-in-out infinite alternate; }
     @keyframes blobFloat { from { transform: translate(0, 0) scale(1); } to { transform: translate(-50px, 50px) scale(1.12); } }
@@ -244,14 +244,14 @@
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-blob"></div>
-  <svg class="hero-hex" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern id="hexPat" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
-        <polygon points="30,1 58,16 58,36 30,51 2,36 2,16" fill="none" stroke="#2ecc71" stroke-width="0.8"/>
-      </pattern>
-    </defs>
-    <rect width="400" height="400" fill="url(#hexPat)"/>
-  </svg>
+    <svg class="hero-hex" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="hexPat" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+          <polygon points="30,1 58,16 58,36 30,51 2,36 2,16" fill="none" stroke="green" stroke-width="0.8"/>
+        </pattern>
+      </defs>
+      <rect width="400" height="400" fill="url(#hexPat)"/>
+    </svg>
   <p class="hero-label">Bilimlendiriw platforması</p>
   <h1>Bilim alıń<br>rawajlanıń<br><em>hám dúnyanı ózgertiń</em></h1>
   <p class="hero-desc">Tájriybeli qánigelerden zamanagóy kurslar. Bos sózler joq — tek ǵana real joybarlarda isleytuǵın kónlikpeler.</p>
