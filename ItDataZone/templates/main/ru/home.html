@@ -1,16 +1,16 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="kaa">
+<html lang="ru">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bas bet</title>
+  <title>Главная</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
-    /* CSS код оставляем как есть, он не требует перевода */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --bg:      #0a0a0f;
       --surface: #111118;
@@ -22,7 +22,9 @@
       --muted:   #6b6b7a;
       --radius:  16px;
     }
+
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -30,6 +32,8 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+
+    /* noise */
     body::before {
       content: '';
       position: fixed;
@@ -39,6 +43,8 @@
       pointer-events: none;
       z-index: 0;
     }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -53,6 +59,7 @@
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
+
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-size: 20px;
@@ -62,6 +69,7 @@
       text-decoration: none;
     }
     .nav-logo span { color: var(--accent); }
+
     .nav-links {
       display: flex;
       align-items: center;
@@ -86,6 +94,7 @@
     .nav-links a.active {
       color: var(--accent);
     }
+
     .nav-cta {
       padding: 8px 18px !important;
       background: var(--accent) !important;
@@ -97,6 +106,8 @@
       background: #d9ff70 !important;
       color: #0a0a0f !important;
     }
+
+    /* burger */
     .burger {
       display: none;
       flex-direction: column;
@@ -117,6 +128,7 @@
     .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .burger.open span:nth-child(2) { opacity: 0; }
     .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     .mobile-menu {
       display: none;
       position: fixed;
@@ -142,6 +154,8 @@
     }
     .mobile-menu a:hover, .mobile-menu a.active { color: var(--text); background: rgba(255,255,255,0.05); }
     .mobile-menu a.active { color: var(--accent); }
+
+    /* ── HERO ── */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -152,6 +166,8 @@
       overflow: hidden;
       z-index: 1;
     }
+
+    /* decorative grid */
     .hero-grid {
       position: absolute;
       inset: 0;
@@ -162,6 +178,8 @@
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
       pointer-events: none;
     }
+
+    /* glow blob */
     .hero-blob {
       position: absolute;
       width: 600px;
@@ -177,6 +195,7 @@
       from { transform: translate(0, 0) scale(1); }
       to   { transform: translate(-40px, 40px) scale(1.1); }
     }
+
     .hero-label {
       font-size: 11px;
       font-weight: 500;
@@ -196,9 +215,10 @@
       height: 1px;
       background: var(--accent);
     }
+
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(40px, 9vw, 110px);
+      font-size: clamp(48px, 9vw, 110px);
       font-weight: 800;
       line-height: 0.92;
       letter-spacing: -0.04em;
@@ -209,6 +229,7 @@
       color: transparent;
       -webkit-text-stroke: 1px rgba(200,240,96,0.4);
     }
+
     .hero-desc {
       margin-top: 32px;
       max-width: 480px;
@@ -217,6 +238,7 @@
       color: rgba(240,237,232,0.6);
       animation: fadeUp 0.6s ease both 0.3s;
     }
+
     .hero-actions {
       margin-top: 40px;
       display: flex;
@@ -224,6 +246,7 @@
       gap: 12px;
       animation: fadeUp 0.6s ease both 0.4s;
     }
+
     .btn-primary {
       display: inline-flex;
       align-items: center;
@@ -239,6 +262,7 @@
       transition: all 0.25s;
     }
     .btn-primary:hover { background: #d9ff70; transform: translateY(-2px); }
+
     .btn-ghost {
       display: inline-flex;
       align-items: center;
@@ -255,6 +279,8 @@
       transition: all 0.25s;
     }
     .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+    /* hero stats */
     .hero-stats {
       margin-top: 64px;
       display: flex;
@@ -262,6 +288,7 @@
       gap: 32px;
       animation: fadeUp 0.6s ease both 0.5s;
     }
+    .hero-stat {}
     .hero-stat-num {
       font-family: 'Syne', sans-serif;
       font-size: 36px;
@@ -280,6 +307,8 @@
       background: var(--border);
       align-self: stretch;
     }
+
+    /* scroll indicator */
     .scroll-hint {
       position: absolute;
       bottom: 36px;
@@ -303,11 +332,14 @@
       0%, 100% { width: 40px; opacity: 0.5; }
       50% { width: 60px; opacity: 1; }
     }
+
+    /* ── SECTION COMMON ── */
     section {
       position: relative;
       z-index: 1;
       padding: 100px 6vw;
     }
+
     .section-label {
       font-size: 11px;
       font-weight: 500;
@@ -326,6 +358,7 @@
       height: 1px;
       background: var(--accent);
     }
+
     .section-header {
       display: flex;
       align-items: flex-end;
@@ -334,6 +367,7 @@
       gap: 20px;
       margin-bottom: 52px;
     }
+
     .section-title {
       font-family: 'Syne', sans-serif;
       font-size: clamp(32px, 5vw, 60px);
@@ -341,11 +375,14 @@
       letter-spacing: -0.03em;
       line-height: 1;
     }
+
+    /* ── COURSES GRID ── */
     .courses-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
     }
+
     .course-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -358,9 +395,23 @@
     .course-card:nth-child(2) { animation-delay: 0.10s; }
     .course-card:nth-child(3) { animation-delay: 0.15s; }
     .course-card:nth-child(4) { animation-delay: 0.20s; }
-    .course-card:hover { transform: translateY(-5px); border-color: rgba(200,240,96,0.2); }
-    .course-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; filter: brightness(0.9); transition: filter 0.3s; }
+    .course-card:nth-child(n+5) { animation-delay: 0.25s; }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200,240,96,0.2);
+    }
+
+    .course-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9);
+      transition: filter 0.3s;
+    }
     .course-card:hover .course-img { filter: brightness(1); }
+
     .course-img-placeholder {
       width: 100%;
       aspect-ratio: 16/9;
@@ -369,8 +420,16 @@
       align-items: center;
       justify-content: center;
     }
-    .course-img-placeholder svg { width: 40px; height: 40px; color: rgba(255,255,255,0.08); }
-    .course-body { padding: 20px 22px 24px; }
+    .course-img-placeholder svg {
+      width: 40px;
+      height: 40px;
+      color: rgba(255,255,255,0.08);
+    }
+
+    .course-body {
+      padding: 20px 22px 24px;
+    }
+
     .course-price-tag {
       display: inline-flex;
       align-items: center;
@@ -384,11 +443,44 @@
       color: var(--accent);
       margin-bottom: 14px;
     }
-    .course-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px; }
-    .course-desc { font-size: 13px; color: var(--muted); line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .course-footer { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .course-date { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+
+    .course-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .course-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .course-footer {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .course-date {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
     .course-date svg { width: 11px; height: 11px; opacity: 0.5; }
+
     .course-enroll-btn {
       display: inline-flex;
       align-items: center;
@@ -404,32 +496,159 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .course-enroll-btn:hover { background: var(--accent); border-color: var(--accent); color: #0a0a0f; font-weight: 600; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 52px; }
-    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 26px; transition: border-color 0.3s; }
+    .course-enroll-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0a0a0f;
+      font-weight: 600;
+    }
+
+    /* ── WHY US ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 52px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+      transition: border-color 0.3s;
+    }
     .feature-card:hover { border-color: rgba(96,200,240,0.2); }
-    .feature-icon { width: 44px; height: 44px; background: rgba(96,200,240,0.08); border: 1px solid rgba(96,200,240,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; color: var(--accent2); }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(96,200,240,0.08);
+      border: 1px solid rgba(96,200,240,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      color: var(--accent2);
+    }
     .feature-icon svg { width: 20px; height: 20px; }
-    .feature-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-    .feature-text { font-size: 13px; line-height: 1.65; color: var(--muted); }
-    .cta-banner { margin: 0 6vw 100px; position: relative; z-index: 1; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 60px 6vw; overflow: hidden; text-align: center; }
-    .cta-banner::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 400px; height: 300px; background: radial-gradient(circle, rgba(200,240,96,0.1), transparent 70%); pointer-events: none; }
-    .cta-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 52px); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; position: relative; }
-    .cta-banner p { font-size: 15px; color: var(--muted); max-width: 440px; margin: 0 auto 32px; line-height: 1.65; position: relative; }
-    footer { border-top: 1px solid var(--border); padding: 32px 6vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1; }
-    .footer-logo { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+
+    .feature-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-text {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      margin: 0 6vw 100px;
+      position: relative;
+      z-index: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 60px 6vw;
+      overflow: hidden;
+      text-align: center;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(200,240,96,0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .cta-banner p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+      position: relative;
+    }
+    .cta-banner .btn-primary { position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 6vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+    }
     .footer-logo span { color: var(--accent); }
-    .footer-copy { font-size: 12px; color: var(--muted); }
-    .footer-links { display: flex; gap: 20px; }
-    .footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
     .footer-links a:hover { color: var(--text); }
-    .empty-courses { grid-column: 1 / -1; text-align: center; padding: 80px 20px; }
-    .empty-courses h3 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: rgba(255,255,255,0.1); margin-bottom: 10px; }
+
+    /* ── EMPTY STATE ── */
+    .empty-courses {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .empty-courses h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.1);
+      margin-bottom: 10px;
+    }
     .empty-courses p { font-size: 14px; color: var(--muted); }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
       .burger { display: flex; }
@@ -442,77 +661,80 @@
 </head>
 <body>
 
+<!-- ── NAVBAR ── -->
 <nav>
-  <a class="nav-logo" href="#">AK<span>.</span></a>
+  <a class="nav-logo" href="#">АК<span>.</span></a>
 
   <ul class="nav-links">
-    <li><a href="#" class="active">Bas bet</a></li>
-    <li><a href="#courses">Kurslar</a></li>
-    <li><a href="#why">Biz haqqımızda</a></li>
-    <li><a href="{% url 'main:teammates' %}">Komanda</a></li>
+    <li><a href="#" class="active">Главная</a></li>
+    <li><a href="#courses">Курсы</a></li>
+    <li><a href="#why">О нас</a></li>
+    <li><a href="{% url 'main:ru_teammates' %}">Команда</a></li>
   </ul>
 
-  <button class="burger" id="burgerBtn" aria-label="Menyu">
+  <button class="burger" id="burgerBtn" aria-label="Меню">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
+<!-- mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#" class="active">Bas bet</a>
-  <a href="#courses">Kurslar</a>
-  <a href="#why">Biz haqqımızda</a>
-  <a href="{% url 'main:teammates' %}">Komanda</a>
+  <a href="#" class="active">Главная</a>
+  <a href="#courses">Курсы</a>
+  <a href="#why">О нас</a>
+  <a href="{% url 'main:ru_teammates' %}">Команда</a>
 </div>
 
+<!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-blob"></div>
 
-  <p class="hero-label">Bilimlendiriw platforması</p>
-<!--  <h1>OQÍ.<br>ÓS.<br><em>JEÑISKE ERIS.</em></h1>-->
-  <h1>Bilim alıń <br>rawajlanıń<br><em>hám dúnyanı ózgertiń – keleshekti óz qolıńız benen jaratıń!"</em></h1>
-  <p class="hero-desc">Tájriybeli qánigelerden zamanagóy kurslar. Bos sózler joq — tek ǵana real joybarlarda isleytuǵın kónlikpeler.</p>
+  <p class="hero-label">Образовательная платформа</p>
+  <h1>УЧИСЬ.<br>РАСТИ.<br><em>ПОБЕЖДАЙ.</em></h1>
+  <p class="hero-desc">Актуальные курсы от практикующих специалистов. Никакой воды — только навыки, которые работают в реальных проектах.</p>
 
   <div class="hero-actions">
     <a href="#courses" class="btn-primary">
-      Kurslardı kóriw
+      Смотреть курсы
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
-    <a href="{% url 'main:teammates' %}" class="btn-ghost">
-      Bizdiń komanda
+    <a href="{% url 'main:ru_teammates' %}" class="btn-ghost">
+      Наша команда
     </a>
   </div>
 
   <div class="hero-stats">
     <div class="hero-stat">
       <div class="hero-stat-num">{{ courses|length }}<span>+</span></div>
-      <div class="hero-stat-label">Aktiv kurslar</div>
+      <div class="hero-stat-label">Активных курсов</div>
     </div>
     <div class="stat-divider"></div>
     <div class="hero-stat">
       <div class="hero-stat-num">100<span>%</span></div>
-      <div class="hero-stat-label">Ámeliy tapsırmalar</div>
+      <div class="hero-stat-label">Практических заданий</div>
     </div>
     <div class="stat-divider"></div>
     <div class="hero-stat">
       <div class="hero-stat-num">24<span>/7</span></div>
-      <div class="hero-stat-label">Materiallarǵa kirisiw</div>
+      <div class="hero-stat-label">Доступ к материалам</div>
     </div>
   </div>
 
   <div class="scroll-hint">
     <div class="scroll-hint-line"></div>
-    Tómenge
+    Scroll
   </div>
 </section>
 
+<!-- ── COURSES ── -->
 <section id="courses">
   <div class="section-header">
     <div>
-      <p class="section-label">Kurslar</p>
-      <h2 class="section-title">Ne úyrenemiz</h2>
+      <p class="section-label">Курсы</p>
+      <h2 class="section-title">Что изучаем</h2>
     </div>
-    <span style="font-size:13px; color:var(--muted)">{{ courses|length }} kurs</span>
+    <span style="font-size:13px; color:var(--muted)">{{ courses|length }} курс{{ courses|length|pluralize:",,ов" }}</span>
   </div>
 
   <div class="courses-grid">
@@ -540,7 +762,7 @@
             {{ course.created_at|date:"d.m.Y" }}
           </span>
           <button class="course-enroll-btn">
-            Jazılıw
+            Записаться
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -548,70 +770,73 @@
     </div>
     {% empty %}
     <div class="empty-courses">
-      <h3>Házirshe kurslar joq</h3>
-      <p>Tez arada jańa oqıw baǵdarlamaları payda boladı.</p>
+      <h3>Курсов пока нет</h3>
+      <p>Скоро появятся новые программы обучения.</p>
     </div>
     {% endfor %}
   </div>
 </section>
 
+<!-- ── WHY US ── -->
 <section id="why" style="padding-top:0;">
-  <p class="section-label">Abzallıqlar</p>
-  <h2 class="section-title">Nelikten biz</h2>
+  <p class="section-label">Преимущества</p>
+  <h2 class="section-title">Почему мы</h2>
 
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </div>
-      <h4 class="feature-title">Real joybarlar</h4>
-      <p class="feature-text">Siz jasama emes, bálki haqıyqıy tapsırmalarda tájriybe arttırasız. Birinshi kúnnen-aq portfolio.</p>
+      <h4 class="feature-title">Реальные проекты</h4>
+      <p class="feature-text">Практикуетесь на настоящих задачах, не синтетических упражнениях. Портфолио с первого дня.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       </div>
-      <h4 class="feature-title">Óz tempińizde</h4>
-      <p class="feature-text">Qálegen waqıtta oqıń. Materiallar 24/7 qolaylı, deдlaynlar hám waqıt sheklewleri joq.</p>
+      <h4 class="feature-title">В своём темпе</h4>
+      <p class="feature-text">Учитесь когда удобно. Материалы доступны 24/7, без дедлайнов и временных ограничений.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       </div>
-      <h4 class="feature-title">Janlı jámiyet</h4>
-      <p class="feature-text">Kuraslaslar, mentorlar hám pitkeriwshiler menen chat. Networking — bul da kónlikpe.</p>
+      <h4 class="feature-title">Живое комьюнити</h4>
+      <p class="feature-text">Чат с одногруппниками, менторами и выпускниками. Нетворкинг — это тоже навык.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       </div>
-      <h4 class="feature-title">Sertifikat</h4>
-      <p class="feature-text">Kurstı tamamlaǵannan soń tastıyıqlawshı hújjet. LinkedIn-ge bir klik penen júklew imkaniyatı.</p>
+      <h4 class="feature-title">Сертификат</h4>
+      <p class="feature-text">Подтверждённый документ после прохождения курса. Загружается в LinkedIn одним кликом.</p>
     </div>
   </div>
 </section>
 
+<!-- ── CTA ── -->
 <div class="cta-banner">
-  <h2>Baslawǵa tayarsıń ba?</h2>
-  <p>Kurstı tańla hám házir jazıl. Birinshi eki sabaq biypul.</p>
+  <h2>Готов начать?</h2>
+  <p>Выбери курс и запишись сейчас. Первые два урока бесплатно.</p>
   <a href="#courses" class="btn-primary">
-    Kurstı tańlaw
+    Выбрать курс
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </div>
 
+<!-- ── FOOTER ── -->
 <footer>
-  <a class="footer-logo" href="#">AK<span>.</span></a>
+  <a class="footer-logo" href="#">АК<span>.</span></a>
   <div class="footer-links">
-    <a href="#">Bas bet</a>
-    <a href="#courses">Kurslar</a>
-    <a href="{% url 'main:teammates' %}">Komanda</a>
+    <a href="#">Главная</a>
+    <a href="#courses">Курсы</a>
+    <a href="{% url 'main:ru_teammates' %}">Команда</a>
   </div>
-  <p class="footer-copy">© {% now "Y" %} Barlıq huqıqlar qorǵalǵan</p>
+  <p class="footer-copy">© {% now "Y" %} Все права защищены</p>
 </footer>
 
 <script>
-  // Burger menyu skripti ózgermeydi
+  // burger menu
   const burgerBtn   = document.getElementById('burgerBtn');
   const mobileMenu  = document.getElementById('mobileMenu');
   burgerBtn.addEventListener('click', () => {
@@ -625,6 +850,7 @@
     });
   });
 
+  // active nav on scroll
   const sections = document.querySelectorAll('section[id], .hero');
   const navLinks  = document.querySelectorAll('.nav-links a, .mobile-menu a');
   window.addEventListener('scroll', () => {

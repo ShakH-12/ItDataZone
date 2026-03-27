@@ -17,3 +17,17 @@ class TeammatesView(View):
     def get(self, request):
         teammates = Teammate.objects.filter(is_active=True)
         return render(request, 'main/teammates.html', {'teammates': teammates})
+
+
+class RuHomeView(View):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        courses = Course.objects.filter(is_active=True)
+        return render(request, 'main/ru/home.html', {"courses": courses})
+
+
+class RuTeammatesView(View):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        teammates = Teammate.objects.filter(is_active=True)
+        return render(request, 'main/ru/teammates.html', {'teammates': teammates})
