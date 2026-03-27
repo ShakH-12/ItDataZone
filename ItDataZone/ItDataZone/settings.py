@@ -24,7 +24,8 @@ LOCAL_APPS = [
     "apps.user",
     "apps.main",
     "apps.bot",
-    "apps.course"
+    "apps.course",
+    "apps.teammate"
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 

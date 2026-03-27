@@ -1,598 +1,871 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IT Data Zone — Курсы</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #18181f;
-    --card: #141419;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --accent: #4f6ef7;
-    --accent2: #7c9bff;
-    --accent-glow: rgba(79,110,247,0.15);
-    --text: #f0f0f8;
-    --muted: #7a7a8e;
-    --muted2: #a0a0b2;
-    --success: #22c97a;
-    --tag-bg: rgba(79,110,247,0.1);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Главная</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    letter-spacing: -0.3px;
-    color: var(--text);
-  }
-  .nav-logo span { color: var(--accent2); }
-  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
-  .nav-link {
-    font-size: 14px; color: var(--muted); text-decoration: none;
-    transition: color .2s;
-  }
-  .nav-link:hover { color: var(--text); }
-  .nav-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 500;
-    background: var(--accent);
-    color: #fff; border: none; cursor: pointer;
-    padding: 7px 16px; border-radius: 8px;
-    transition: opacity .2s;
-  }
-  .nav-btn:hover { opacity: .85; }
+    :root {
+      --bg:      #0a0a0f;
+      --surface: #111118;
+      --card:    #16161f;
+      --border:  rgba(255,255,255,0.07);
+      --accent:  #c8f060;
+      --accent2: #60c8f0;
+      --text:    #f0ede8;
+      --muted:   #6b6b7a;
+      --radius:  16px;
+    }
 
-  /* HERO */
-  .hero {
-    padding: 5rem 2rem 3rem;
-    max-width: 1100px; margin: 0 auto;
-    display: flex; align-items: flex-end; justify-content: space-between;
-    gap: 2rem; flex-wrap: wrap;
-  }
-  .hero-left { flex: 1; min-width: 260px; }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--tag-bg);
-    border: 1px solid rgba(79,110,247,0.2);
-    color: var(--accent2);
-    font-size: 12px; font-weight: 500; letter-spacing: .5px;
-    padding: 4px 12px; border-radius: 20px; margin-bottom: 1.2rem;
-    text-transform: uppercase;
-  }
-  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); }
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 800; line-height: 1.1;
-    letter-spacing: -1px;
-    margin-bottom: .8rem;
-  }
-  h1 span {
-    background: linear-gradient(135deg, var(--accent2), #a78bfa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .hero-sub { font-size: 16px; color: var(--muted2); line-height: 1.6; max-width: 480px; }
-  .hero-stats {
-    display: flex; gap: 2rem; flex-shrink: 0;
-    padding-bottom: 4px;
-  }
-  .stat-item { text-align: center; }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem; font-weight: 800;
-    color: var(--text); line-height: 1;
-  }
-  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    html { scroll-behavior: smooth; }
 
-  /* FILTER BAR */
-  .filter-bar {
-    max-width: 1100px; margin: 0 auto 2.5rem;
-    padding: 0 2rem;
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  }
-  .filter-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 400;
-    background: transparent;
-    border: 1px solid var(--border2);
-    color: var(--muted2); cursor: pointer;
-    padding: 7px 16px; border-radius: 20px;
-    transition: all .2s;
-  }
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent2); }
-  .filter-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-  .search-wrap {
-    margin-left: auto;
-    position: relative;
-  }
-  .search-wrap svg {
-    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
-    color: var(--muted); pointer-events: none;
-  }
-  .search-input {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    background: var(--bg3);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    padding: 8px 12px 8px 34px;
-    border-radius: 8px; width: 220px;
-    outline: none; transition: border-color .2s;
-  }
-  .search-input::placeholder { color: var(--muted); }
-  .search-input:focus { border-color: var(--accent); }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  /* GRID */
-  .courses-grid {
-    max-width: 1100px; margin: 0 auto;
-    padding: 0 2rem 6rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
+    /* noise */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  /* CARD */
-  .course-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform .25s, border-color .25s, box-shadow .25s;
-    display: flex; flex-direction: column;
-  }
-  .course-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(79,110,247,0.3);
-    box-shadow: 0 12px 40px rgba(79,110,247,0.08);
-  }
-  .card-img {
-    width: 100%; height: 180px;
-    object-fit: cover;
-    background: var(--bg3);
-    display: block;
-  }
-  .card-img-placeholder {
-    width: 100%; height: 180px;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .card-img-placeholder svg { opacity: .3; }
-  .card-body { padding: 1.2rem 1.3rem 1.3rem; flex: 1; display: flex; flex-direction: column; }
-  .card-meta {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
-  }
-  .badge-active {
-    font-size: 11px; font-weight: 500;
-    padding: 3px 9px; border-radius: 20px;
-    background: rgba(34,201,122,0.12);
-    color: var(--success);
-    border: 1px solid rgba(34,201,122,0.2);
-    letter-spacing: .3px;
-  }
-  .badge-inactive {
-    font-size: 11px; font-weight: 500;
-    padding: 3px 9px; border-radius: 20px;
-    background: rgba(255,255,255,0.05);
-    color: var(--muted);
-    border: 1px solid var(--border);
-  }
-  .card-date { font-size: 11px; color: var(--muted); margin-left: auto; }
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 17px; font-weight: 700;
-    line-height: 1.3; margin-bottom: 8px;
-    color: var(--text);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .card-desc {
-    font-size: 13px; color: var(--muted2); line-height: 1.6;
-    flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    border-top: 1px solid var(--border);
-    padding-top: .9rem; margin-top: auto;
-  }
-  .card-price {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px; font-weight: 800;
-    color: var(--text);
-  }
-  .card-price span { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 2px; }
-  .card-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; font-weight: 500;
-    background: var(--accent);
-    color: #fff; border: none; cursor: pointer;
-    padding: 8px 18px; border-radius: 8px;
-    transition: opacity .2s, transform .15s;
-  }
-  .card-btn:hover { opacity: .85; transform: scale(1.03); }
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      height: 64px;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
 
-  /* MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(5,5,10,0.85);
-    backdrop-filter: blur(6px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 1rem;
-    opacity: 0; pointer-events: none;
-    transition: opacity .25s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal {
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: 20px;
-    max-width: 600px; width: 100%;
-    max-height: 88vh; overflow-y: auto;
-    transform: translateY(20px);
-    transition: transform .3s;
-  }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-img {
-    width: 100%; height: 220px;
-    object-fit: cover; display: block;
-    border-radius: 20px 20px 0 0;
-  }
-  .modal-img-placeholder {
-    width: 100%; height: 220px;
-    background: linear-gradient(135deg, #1a1a2e, #0f3460);
-    border-radius: 20px 20px 0 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .modal-img-placeholder svg { opacity: .25; }
-  .modal-body { padding: 1.8rem 2rem 2rem; }
-  .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-  .modal-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px; font-weight: 800;
-    line-height: 1.2; color: var(--text); flex: 1;
-  }
-  .modal-close {
-    background: var(--bg3); border: 1px solid var(--border2);
-    color: var(--muted); cursor: pointer;
-    width: 34px; height: 34px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0; transition: all .2s;
-  }
-  .modal-close:hover { color: var(--text); border-color: var(--accent); }
-  .modal-desc {
-    font-size: 14px; color: var(--muted2); line-height: 1.7; margin-bottom: 1.5rem;
-  }
-  .modal-info-row {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem;
-  }
-  .modal-info-item {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px; padding: .75rem 1rem;
-  }
-  .modal-info-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
-  .modal-info-val { font-size: 15px; font-weight: 500; color: var(--text); }
-  .modal-actions { display: flex; gap: 10px; }
-  .modal-buy {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px; font-weight: 500;
-    background: var(--accent); color: #fff;
-    border: none; cursor: pointer;
-    flex: 1; padding: 12px; border-radius: 10px;
-    transition: opacity .2s;
-  }
-  .modal-buy:hover { opacity: .85; }
-  .modal-cancel {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px; font-weight: 400;
-    background: transparent; color: var(--muted2);
-    border: 1px solid var(--border2); cursor: pointer;
-    padding: 12px 20px; border-radius: 10px;
-    transition: all .2s;
-  }
-  .modal-cancel:hover { border-color: var(--accent); color: var(--text); }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
 
-  /* LOADER & EMPTY */
-  .state-box {
-    grid-column: 1/-1;
-    display: flex; flex-direction: column; align-items: center;
-    padding: 4rem 1rem; gap: 1rem; color: var(--muted);
-  }
-  .spinner {
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 2px solid var(--border2);
-    border-top-color: var(--accent);
-    animation: spin .8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 7px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+    .nav-links a.active {
+      color: var(--accent);
+    }
 
-  /* ERROR TOAST */
-  .toast {
-    position: fixed; bottom: 2rem; right: 2rem; z-index: 300;
-    background: #2a1818; border: 1px solid rgba(255,80,80,0.3);
-    color: #ff8080; font-size: 13px;
-    padding: .75rem 1.2rem; border-radius: 10px;
-    transform: translateY(100px); opacity: 0;
-    transition: all .3s;
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
+    .nav-cta {
+      padding: 8px 18px !important;
+      background: var(--accent) !important;
+      color: #0a0a0f !important;
+      font-weight: 600 !important;
+      border-radius: 10px;
+    }
+    .nav-cta:hover {
+      background: #d9ff70 !important;
+      color: #0a0a0f !important;
+    }
 
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+    /* burger */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  @media (max-width: 600px) {
-    .hero { padding: 3rem 1rem 2rem; }
-    .hero-stats { gap: 1.2rem; }
-    .filter-bar { padding: 0 1rem; }
-    .courses-grid { padding: 0 1rem 4rem; }
-    .search-wrap { width: 100%; }
-    .search-input { width: 100%; }
-    nav { padding: 0 1rem; }
-    .modal-body { padding: 1.2rem 1.2rem 1.5rem; }
-    .modal-info-row { grid-template-columns: 1fr; }
-  }
-</style>
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 6vw 20px;
+      z-index: 49;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--text); background: rgba(255,255,255,0.05); }
+    .mobile-menu a.active { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 6vw 80px;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* decorative grid */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* glow blob */
+    .hero-blob {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200,240,96,0.08) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: blobFloat 8s ease-in-out infinite alternate;
+    }
+    @keyframes blobFloat {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-40px, 40px) scale(1.1); }
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease both 0.1s;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(48px, 9vw, 110px);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      animation: fadeUp 0.6s ease both 0.2s;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200,240,96,0.4);
+    }
+
+    .hero-desc {
+      margin-top: 32px;
+      max-width: 480px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(240,237,232,0.6);
+      animation: fadeUp 0.6s ease both 0.3s;
+    }
+
+    .hero-actions {
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      animation: fadeUp 0.6s ease both 0.4s;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: #0a0a0f;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-primary:hover { background: #d9ff70; transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+    /* hero stats */
+    .hero-stats {
+      margin-top: 64px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      animation: fadeUp 0.6s ease both 0.5s;
+    }
+    .hero-stat {}
+    .hero-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+    .hero-stat-num span { color: var(--accent); }
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 6vw;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeUp 0.6s ease both 0.7s;
+    }
+    .scroll-hint-line {
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { width: 40px; opacity: 0.5; }
+      50% { width: 60px; opacity: 1; }
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 6vw;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 52px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 5vw, 60px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    /* ── COURSES GRID ── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .course-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(.23,1,.32,1), border-color 0.3s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .course-card:nth-child(1) { animation-delay: 0.05s; }
+    .course-card:nth-child(2) { animation-delay: 0.10s; }
+    .course-card:nth-child(3) { animation-delay: 0.15s; }
+    .course-card:nth-child(4) { animation-delay: 0.20s; }
+    .course-card:nth-child(n+5) { animation-delay: 0.25s; }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200,240,96,0.2);
+    }
+
+    .course-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9);
+      transition: filter 0.3s;
+    }
+    .course-card:hover .course-img { filter: brightness(1); }
+
+    .course-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1a24 0%, #13131b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .course-img-placeholder svg {
+      width: 40px;
+      height: 40px;
+      color: rgba(255,255,255,0.08);
+    }
+
+    .course-body {
+      padding: 20px 22px 24px;
+    }
+
+    .course-price-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: rgba(200,240,96,0.1);
+      border: 1px solid rgba(200,240,96,0.2);
+      border-radius: 100px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .course-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .course-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .course-footer {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .course-date {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .course-date svg { width: 11px; height: 11px; opacity: 0.5; }
+
+    .course-enroll-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .course-enroll-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0a0a0f;
+      font-weight: 600;
+    }
+
+    /* ── WHY US ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 52px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+      transition: border-color 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(96,200,240,0.2); }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(96,200,240,0.08);
+      border: 1px solid rgba(96,200,240,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      color: var(--accent2);
+    }
+    .feature-icon svg { width: 20px; height: 20px; }
+
+    .feature-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-text {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      margin: 0 6vw 100px;
+      position: relative;
+      z-index: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 60px 6vw;
+      overflow: hidden;
+      text-align: center;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(200,240,96,0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .cta-banner p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+      position: relative;
+    }
+    .cta-banner .btn-primary { position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 6vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── EMPTY STATE ── */
+    .empty-courses {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .empty-courses h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.1);
+      margin-bottom: 10px;
+    }
+    .empty-courses p { font-size: 14px; color: var(--muted); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .burger { display: flex; }
+      .hero-stats .stat-divider { display: none; }
+      .hero-stats { gap: 24px; }
+      .cta-banner { padding: 40px 6vw; margin: 0 4vw 60px; }
+      footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
 </head>
 <body>
 
+<!-- ── NAVBAR ── -->
 <nav>
-  <div class="nav-logo">IT <span>Data</span> Zone</div>
-  <div class="nav-right">
-    <a class="nav-link" href="#">О нас</a>
-    <a class="nav-link" href="#">Контакты</a>
-    <button class="nav-btn">Войти</button>
-  </div>
+  <a class="nav-logo" href="#">АК<span>.</span></a>
+
+  <ul class="nav-links">
+    <li><a href="#" class="active">Главная</a></li>
+    <li><a href="#courses">Курсы</a></li>
+    <li><a href="#why">О нас</a></li>
+    <li><a href="{% url 'main:teammates' %}">Команда</a></li>
+  </ul>
+
+  <button class="burger" id="burgerBtn" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" class="active">Главная</a>
+  <a href="#courses">Курсы</a>
+  <a href="#why">О нас</a>
+  <a href="{% url 'main:teammates' %}">Команда</a>
+</div>
+
+<!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">Онлайн-обучение</div>
-    <h1>Прокачай навыки<br>в <span>IT сфере</span></h1>
-    <p class="hero-sub">Профессиональные курсы по программированию, аналитике данных и разработке. Учись у практикующих специалистов.</p>
+  <div class="hero-grid"></div>
+  <div class="hero-blob"></div>
+
+  <p class="hero-label">Образовательная платформа</p>
+  <h1>УЧИСЬ.<br>РАСТИ.<br><em>ПОБЕЖДАЙ.</em></h1>
+  <p class="hero-desc">Актуальные курсы от практикующих специалистов. Никакой воды — только навыки, которые работают в реальных проектах.</p>
+
+  <div class="hero-actions">
+    <a href="#courses" class="btn-primary">
+      Смотреть курсы
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="{% url 'main:teammates' %}" class="btn-ghost">
+      Наша команда
+    </a>
   </div>
+
   <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num" id="stat-count">—</div>
-      <div class="stat-label">курсов</div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">{{ courses|length }}<span>+</span></div>
+      <div class="hero-stat-label">Активных курсов</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">онлайн</div>
+    <div class="stat-divider"></div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100<span>%</span></div>
+      <div class="hero-stat-label">Практических заданий</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">доступ</div>
+    <div class="stat-divider"></div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">24<span>/7</span></div>
+      <div class="hero-stat-label">Доступ к материалам</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ── COURSES ── -->
+<section id="courses">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Курсы</p>
+      <h2 class="section-title">Что изучаем</h2>
+    </div>
+    <span style="font-size:13px; color:var(--muted)">{{ courses|length }} курс{{ courses|length|pluralize:",,ов" }}</span>
+  </div>
+
+  <div class="courses-grid">
+    {% for course in courses %}
+    <div class="course-card">
+      {% if course.photo %}
+        <img class="course-img" src="{{ course.photo.url }}" alt="{{ course.name }}" loading="lazy">
+      {% else %}
+        <div class="course-img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+      {% endif %}
+
+      <div class="course-body">
+        <div class="course-price-tag">{{ course.price }} ₸</div>
+        <h3 class="course-name">{{ course.name }}</h3>
+        <p class="course-desc">{{ course.description }}</p>
+
+        <div class="course-footer">
+          <span class="course-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            {{ course.created_at|date:"d.m.Y" }}
+          </span>
+          <button class="course-enroll-btn">
+            Записаться
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-courses">
+      <h3>Курсов пока нет</h3>
+      <p>Скоро появятся новые программы обучения.</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section id="why" style="padding-top:0;">
+  <p class="section-label">Преимущества</p>
+  <h2 class="section-title">Почему мы</h2>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <h4 class="feature-title">Реальные проекты</h4>
+      <p class="feature-text">Практикуетесь на настоящих задачах, не синтетических упражнениях. Портфолио с первого дня.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h4 class="feature-title">В своём темпе</h4>
+      <p class="feature-text">Учитесь когда удобно. Материалы доступны 24/7, без дедлайнов и временных ограничений.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h4 class="feature-title">Живое комьюнити</h4>
+      <p class="feature-text">Чат с одногруппниками, менторами и выпускниками. Нетворкинг — это тоже навык.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h4 class="feature-title">Сертификат</h4>
+      <p class="feature-text">Подтверждённый документ после прохождения курса. Загружается в LinkedIn одним кликом.</p>
     </div>
   </div>
 </section>
 
-<div class="filter-bar">
-  <button class="filter-btn active" data-filter="all">Все</button>
-  <button class="filter-btn" data-filter="active">Активные</button>
-  <button class="filter-btn" data-filter="inactive">Неактивные</button>
-  <div class="search-wrap">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-    </svg>
-    <input class="search-input" type="text" id="searchInput" placeholder="Поиск курса...">
+<!-- ── CTA ── -->
+<div class="cta-banner">
+  <h2>Готов начать?</h2>
+  <p>Выбери курс и запишись сейчас. Первые два урока бесплатно.</p>
+  <a href="#courses" class="btn-primary">
+    Выбрать курс
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a class="footer-logo" href="#">АК<span>.</span></a>
+  <div class="footer-links">
+    <a href="#">Главная</a>
+    <a href="#courses">Курсы</a>
+    <a href="{% url 'main:teammates' %}">Команда</a>
   </div>
-</div>
-
-<div class="courses-grid" id="grid">
-  <div class="state-box"><div class="spinner"></div><span>Загружаем курсы...</span></div>
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal">
-    <div id="modalContent"></div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
+  <p class="footer-copy">© {% now "Y" %} Все права защищены</p>
+</footer>
 
 <script>
-// const API = "http://127.0.0.1:8000/api/v1/course/" //'https://qitcompany.pythonanywhere.com/api/v1/courses/';
-const API = 'https://qitcompany.pythonanywhere.com/api/v1/course/';
-const MEDIA = 'http://127.0.0.1:8000';
-
-let allCourses = [];
-let currentFilter = 'all';
-let searchVal = '';
-
-async function loadCourses() {
-  try {
-    const r = await fetch(API);
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const data = await r.json();
-    allCourses = Array.isArray(data) ? data : (data.results || []);
-    document.getElementById('stat-count').textContent = allCourses.length;
-    render();
-  } catch(e) {
-    showToast('Не удалось загрузить курсы. Проверь CORS и запущен ли сервер.');
-    document.getElementById('grid').innerHTML = `<div class="state-box">
-      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:var(--muted)">
-        <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
-      </svg>
-      <span>Сервер недоступен</span>
-      <span style="font-size:12px">Запусти: python manage.py runserver</span>
-    </div>`;
-  }
-}
-
-function render() {
-  let list = allCourses;
-  if (currentFilter === 'active') list = list.filter(c => c.is_active);
-  if (currentFilter === 'inactive') list = list.filter(c => !c.is_active);
-  if (searchVal) {
-    const s = searchVal.toLowerCase();
-    list = list.filter(c => c.name.toLowerCase().includes(s) || c.description.toLowerCase().includes(s));
-  }
-
-  const grid = document.getElementById('grid');
-  if (!list.length) {
-    grid.innerHTML = `<div class="state-box"><span>Курсы не найдены</span></div>`;
-    return;
-  }
-
-  grid.innerHTML = list.map(c => cardHTML(c)).join('');
-  grid.querySelectorAll('.course-card').forEach(el => {
-    el.addEventListener('click', () => openModal(+el.dataset.id));
+  // burger menu
+  const burgerBtn   = document.getElementById('burgerBtn');
+  const mobileMenu  = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', () => {
+    burgerBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
   });
-}
-
-function imgHTML(photo, cls, ph_cls) {
-  if (photo) {
-    const src = photo.startsWith('http') ? photo : MEDIA + photo;
-    return `<img class="${cls}" src="${src}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="${ph_cls}" style="display:none">${courseIcon()}</div>`;
-  }
-  return `<div class="${ph_cls}">${courseIcon()}</div>`;
-}
-
-function courseIcon() {
-  return `<svg width="48" height="48" fill="none" stroke="#4f6ef7" stroke-width="1.5" viewBox="0 0 24 24">
-    <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-  </svg>`;
-}
-
-function formatPrice(p) {
-  const n = parseFloat(p);
-  if (n === 0) return 'Бесплатно';
-  return n.toLocaleString('ru-RU') + ' ₸';
-}
-
-function formatDate(d) {
-  return new Date(d).toLocaleDateString('ru-RU', {day:'2-digit', month:'short', year:'numeric'});
-}
-
-function cardHTML(c) {
-  return `<div class="course-card" data-id="${c.id}">
-    ${imgHTML(c.photo, 'card-img', 'card-img-placeholder')}
-    <div class="card-body">
-      <div class="card-meta">
-        <span class="${c.is_active ? 'badge-active' : 'badge-inactive'}">${c.is_active ? 'Активен' : 'Неактивен'}</span>
-        <span class="card-date">${formatDate(c.created_at)}</span>
-      </div>
-      <div class="card-title">${esc(c.name)}</div>
-      <div class="card-desc">${esc(c.description)}</div>
-      <div class="card-footer">
-        <div class="card-price">${formatPrice(c.price)}</div>
-        <button class="card-btn">Подробнее</button>
-      </div>
-    </div>
-  </div>`;
-}
-
-function openModal(id) {
-  const c = allCourses.find(x => x.id === id);
-  if (!c) return;
-  document.getElementById('modalContent').innerHTML = `
-    ${imgHTML(c.photo, 'modal-img', 'modal-img-placeholder')}
-    <div class="modal-body">
-      <div class="modal-head">
-        <div class="modal-title">${esc(c.name)}</div>
-        <button class="modal-close" id="modalCloseBtn">✕</button>
-      </div>
-      <div class="modal-desc">${esc(c.description)}</div>
-      <div class="modal-info-row">
-        <div class="modal-info-item">
-          <div class="modal-info-label">Стоимость</div>
-          <div class="modal-info-val">${formatPrice(c.price)}</div>
-        </div>
-        <div class="modal-info-item">
-          <div class="modal-info-label">Статус</div>
-          <div class="modal-info-val" style="color:${c.is_active ? 'var(--success)' : 'var(--muted)'}">${c.is_active ? 'Активен' : 'Неактивен'}</div>
-        </div>
-        <div class="modal-info-item">
-          <div class="modal-info-label">Добавлен</div>
-          <div class="modal-info-val">${formatDate(c.created_at)}</div>
-        </div>
-        <div class="modal-info-item">
-          <div class="modal-info-label">Обновлён</div>
-          <div class="modal-info-val">${formatDate(c.updated_at)}</div>
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="modal-buy">Записаться на курс</button>
-        <button class="modal-cancel" id="modalCancelBtn">Закрыть</button>
-      </div>
-    </div>`;
-  document.getElementById('modalOverlay').classList.add('open');
-  document.getElementById('modalCloseBtn').onclick = closeModal;
-  document.getElementById('modalCancelBtn').onclick = closeModal;
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-
-document.getElementById('modalOverlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-});
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
-    render();
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
   });
-});
 
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchVal = e.target.value;
-  render();
-});
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
-
-loadCourses();
+  // active nav on scroll
+  const sections = document.querySelectorAll('section[id], .hero');
+  const navLinks  = document.querySelectorAll('.nav-links a, .mobile-menu a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id || '';
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active',
+        (current === 'courses' && a.getAttribute('href') === '#courses') ||
+        (current === 'why'     && a.getAttribute('href') === '#why') ||
+        (current === ''        && a.getAttribute('href') === '#')
+      );
+    });
+  }, { passive: true });
 </script>
 </body>
 </html>
