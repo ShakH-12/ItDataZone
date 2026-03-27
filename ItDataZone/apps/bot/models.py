@@ -24,9 +24,9 @@ class User(models.Model):
         self.full_clean()
         super().save(*args, **kwargs)
 
-    def deactivate(self):
-        self.is_active = False
-        self.save(update_fields=["is_active"])
+    # def deactivate(self):
+    #     self.is_active = False
+    #     self.save(update_fields=["is_active"])
 
     def activate(self):
         self.is_active = True
