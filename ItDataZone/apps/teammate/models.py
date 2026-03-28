@@ -28,8 +28,24 @@ class Teammate(models.Model):
     class Meta:
         verbose_name = "Team"
         verbose_name_plural = "Teams"
-        ordering = ["-created_at"]
+        ordering = ["-updated_at"]
         indexes = [models.Index(fields=["full_name"])]
 
     def __str__(self):
         return self.full_name
+
+
+class Certificate(models.Model):
+    recipient = models.CharField(verbose_name="Recipient", max_length=50)
+    mentor = models.ForeignKey(Teammate, on_delete=models.CASCADE, verbose_name="Mentor")
+    certificate = models.FileField(verbose_name="Certificate", blank=True, null=True)
+    photo = models.ImageField(verbose_name="Photo", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
+
+    class Meta:
+        verbose_name = "Certificate"
+        verbose_name_plural = "Certificates"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.recipient

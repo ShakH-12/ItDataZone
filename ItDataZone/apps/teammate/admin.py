@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Teammate, Role
+from .models import Teammate, Role, Certificate
 
 
 @admin.register(Teammate)
@@ -12,3 +12,9 @@ class TeammateAdmin(admin.ModelAdmin):
 class RoleAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ('recipient',)
+    search_fields = ('recipient', 'mentor',)
