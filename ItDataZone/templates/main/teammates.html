@@ -274,7 +274,7 @@
 
   function openModal(i) {
     const m = TEAMMATES[i];
-    let photoHtml = m.photo ? `<img src="${m.photo}" style="width:100%; max-height:400px; object-fit:cover; border-radius:20px 20px 0 0;">` : '';
+    let photoHtml = m.photo ? `<img src="${m.photo}" style="width:100%; object-fit:cover; border-radius:20px 20px 0 0;">` : '';
 
     let links = '<div style="margin-top:20px;">';
     if(m.github) links += `<a class="link-btn" href="${m.github}" target="_blank">GH</a>`;

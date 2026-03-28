@@ -18,166 +18,130 @@
             background-color: var(--bg-color);
             color: white;
             font-family: 'Space Grotesk', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; min-height: 100vh;
             background-image: radial-gradient(circle at 50% 50%, #052626 0%, #010d0d 100%);
-            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Заголовок в стиле картинки */
-        .header-section {
-            margin-bottom: 60px;
-        }
+        /* Header */
+        .label { color: var(--accent-green); text-transform: uppercase; letter-spacing: 2px; font-size: 14px; }
+        .title { font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; margin: 10px 0 50px; text-transform: uppercase; line-height: 1.1; }
+        .title span { display: block; -webkit-text-stroke: 1px rgba(255,255,255,0.3); color: transparent; }
 
-        .label {
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 14px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .title {
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 900;
-            line-height: 1.1;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        .title span {
-            display: block;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
-            color: transparent;
-        }
-
-        /* Сетка сертификатов */
-        .cert-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
+        /* Grid & Cards */
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
         .cert-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .cert-card:hover {
-            border-color: var(--accent-green);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+        .cert-card:hover { border-color: var(--accent-green); transform: translateY(-5px); }
+
+        .cert-thumb {
+            width: 100%; height: 180px; object-fit: cover;
+            border-radius: 8px; margin-bottom: 15px;
         }
 
-        .cert-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background: #000;
+        .cert-info h3 { margin: 0 0 5px; font-size: 1.2rem; }
+        .mentor-name { color: var(--accent-green); font-size: 0.9rem; margin-bottom: 10px; }
+
+        /* --- MODAL STYLES --- */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            align-items: center; justify-content: center;
         }
 
-        .cert-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.5rem;
-            color: white;
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px; border-radius: 20px;
+            max-width: 800px; width: 90%;
+            border: 1px solid var(--accent-green);
+            position: relative; text-align: center;
         }
 
-        .mentor-tag {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            margin-bottom: 15px;
+        .modal-img { width: 100%; max-height: 60vh; object-fit: contain; border-radius: 10px; margin-bottom: 20px; }
+
+        .close-modal {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 30px; color: var(--accent-green); cursor: pointer;
         }
 
-        .mentor-tag b {
-            color: var(--accent-green);
-        }
-
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            background: var(--accent-green);
-            color: #010d0d;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            transition: opacity 0.2s;
-        }
-
-        .btn-download:hover {
-            opacity: 0.9;
-        }
-
-        /* Декоративная сетка как на фоне */
-        .bg-grid {
-            position: fixed;
-            top: 0; right: 0;
-            width: 40%; height: 100%;
-            background-image:
-                linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            mask-image: linear-gradient(to left, black, transparent);
+        .download-link {
+            display: inline-block; background: var(--accent-green);
+            color: #000; padding: 12px 30px; border-radius: 8px;
+            text-decoration: none; font-weight: bold; margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
+<div class="container">
+    <header>
+        <span class="label">IT DATA ZONE</span>
+        <h1 class="title">Sertifikatlar <span>Galereyasi</span></h1>
+    </header>
 
-    <div class="container">
-        <header class="header-section">
-            <span class="label">Muvaffaqiyatlarimiz</span>
-            <h1 class="title">
-                Sertifikatlar
-                <span>Hujjatlar Arxivı</span>
-            </h1>
-        </header>
-
-        <div class="cert-grid">
-            {% for cert in certificates %}
-            <div class="cert-card">
-                {% if cert.photo %}
-                    <img src="{{ cert.photo.url }}" alt="{{ cert.recipient }}" class="cert-image">
-                {% else %}
-                    <div class="cert-image" style="display: flex; align-items: center; justify-content: center; background: #011515;">
-                        <span style="color: var(--border-color);">No Preview</span>
-                    </div>
-                {% endif %}
-
-                <div class="cert-info">
-                    <h3>{{ cert.recipient }}</h3>
-                    <p class="mentor-tag">Mentor: <b>{{ cert.mentor.name }}</b></p>
-                    <p style="font-size: 12px; color: var(--text-gray);">Berilgan sana: {{ cert.created_at|date:"d.m.Y" }}</p>
-
-                    {% if cert.certificate %}
-                        <a href="{{ cert.certificate.url }}" class="btn-download" target="_blank">
-                            Yuklab olish ↓
-                        </a>
-                    {% endif %}
-                </div>
+    <div class="cert-grid">
+        {% for cert in certificates %}
+        <div class="cert-card"
+             onclick="openModal('{{ cert.photo.url }}', '{{ cert.recipient }}', '{{ cert.mentor }}', '{{ cert.certificate.url }}')">
+            {% if cert.photo %}
+                <img src="{{ cert.photo.url }}" class="cert-thumb">
+            {% endif %}
+            <div class="cert-info">
+                <h3>{{ cert.recipient }}</h3>
+                <p class="mentor-name">Mentor: {{ cert.mentor }}</p>
             </div>
-            {% empty %}
-                <p>Hozircha sertifikatlar mavjud emas.</p>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
+</div>
+
+<div id="certModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img id="modalImg" src="" class="modal-img">
+        <h2 id="modalName"></h2>
+        <p id="modalMentor" style="color: var(--text-gray);"></p>
+        <a id="modalDownload" href="" class="download-link" target="_blank">Sertifikatni yuklab olish (.pdf)</a>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById("certModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalName = document.getElementById("modalName");
+    const modalMentor = document.getElementById("modalMentor");
+    const modalDownload = document.getElementById("modalDownload");
+
+    function openModal(img, name, mentor, file) {
+        modalImg.src = img;
+        modalName.innerText = name;
+        modalMentor.innerText = "Mentor: " + mentor;
+        modalDownload.href = file;
+        modal.style.display = "flex";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Закрытие при клике вне контента
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
 
 </body>
 </html>
