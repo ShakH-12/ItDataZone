@@ -1,370 +1,170 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kaa">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 — IT Data Zone</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Bet tabılmadı | IT DATA ZONE</title>
+    <style>
+        :root {
+            --bg-color: #021a1a;
+            --accent-green: #00ff88;
+            --text-white: #ffffff;
+            --muted-text: rgba(255, 255, 255, 0.6);
+            --grid-color: rgba(0, 255, 136, 0.05);
+        }
 
-    :root {
-      --bg: #050a0f;
-      --surface: #0b1520;
-      --accent: #00d4ff;
-      --accent2: #0066ff;
-      --danger: #ff3c5a;
-      --text: #e0f0ff;
-      --muted: #4a6a80;
-      --mono: 'Share Tech Mono', monospace;
-      --sans: 'Syne', sans-serif;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif; /* Поменяй на свой шрифт, если есть */
+        }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-    /* ── GRID BACKGROUND ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: 0;
-    }
+        /* Сетка как на фоне сайта */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(45deg);
+            z-index: 0;
+            top: -50%;
+        }
 
-    /* ── GLOW BLOBS ── */
-    .blob {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.15;
-      z-index: 0;
-      animation: drift 8s ease-in-out infinite alternate;
-    }
-    .blob-1 { width: 500px; height: 500px; background: var(--accent2); top: -150px; left: -100px; }
-    .blob-2 { width: 400px; height: 400px; background: var(--danger); bottom: -100px; right: -100px; animation-delay: -4s; }
+        .container {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+            max-width: 800px;
+        }
 
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to   { transform: translate(30px, 20px) scale(1.05); }
-    }
+        .error-code {
+            font-size: clamp(8rem, 20vw, 15rem);
+            font-weight: 900;
+            line-height: 0.8;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, var(--text-white) 0%, transparent 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.8;
+            letter-spacing: -5px;
+        }
 
-    /* ── SCANLINE ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.08) 2px,
-        rgba(0,0,0,0.08) 4px
-      );
-      pointer-events: none;
-      z-index: 999;
-    }
+        .title {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
 
-    /* ── CONTAINER ── */
-    .container {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 2rem;
-      max-width: 680px;
-      width: 100%;
-      animation: fadeUp 0.8s ease both;
-    }
+        .description {
+            color: var(--muted-text);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    /* ── BADGE ── */
-    .badge {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      border: 1px solid rgba(0,212,255,0.3);
-      padding: 0.3rem 0.9rem;
-      border-radius: 2px;
-      letter-spacing: 0.15em;
-      margin-bottom: 2rem;
-      background: rgba(0,212,255,0.05);
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
+        .btn-primary {
+            background-color: var(--accent-green);
+            color: #000;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    /* ── 404 BIG ── */
-    .error-code {
-      font-size: clamp(7rem, 22vw, 13rem);
-      font-weight: 800;
-      line-height: 0.9;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--danger) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-      animation: fadeUp 0.8s 0.2s ease both;
-    }
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
 
-    /* glitch effect */
-    .error-code::before,
-    .error-code::after {
-      content: '404';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--danger) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .error-code::before {
-      animation: glitch1 3s infinite;
-      clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
-    }
-    .error-code::after {
-      animation: glitch2 3s infinite;
-      clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
-    }
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-white);
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
 
-    @keyframes glitch1 {
-      0%,90%,100% { transform: translate(0); opacity: 0; }
-      92% { transform: translate(-4px, 2px); opacity: 0.7; }
-      94% { transform: translate(4px, -2px); opacity: 0.7; }
-      96% { transform: translate(0); opacity: 0; }
-    }
-    @keyframes glitch2 {
-      0%,90%,100% { transform: translate(0); opacity: 0; }
-      93% { transform: translate(4px, 2px); opacity: 0.6; }
-      95% { transform: translate(-3px, -1px); opacity: 0.6; }
-      97% { transform: translate(0); opacity: 0; }
-    }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-    /* ── DIVIDER ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 1.5rem auto;
-      max-width: 300px;
-      animation: fadeUp 0.8s 0.3s ease both;
-    }
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    }
-    .divider-dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent);
-    }
+        /* Декоративный элемент как соты на скрине */
+        .decoration {
+            position: absolute;
+            right: -5%;
+            top: 20%;
+            opacity: 0.1;
+            pointer-events: none;
+        }
 
-    /* ── TEXT ── */
-    .title {
-      font-size: clamp(1.1rem, 3vw, 1.5rem);
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-      animation: fadeUp 0.8s 0.35s ease both;
-    }
-
-    .subtitle {
-      font-family: var(--mono);
-      font-size: clamp(0.75rem, 2vw, 0.9rem);
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-      animation: fadeUp 0.8s 0.4s ease both;
-    }
-
-    /* ── TERMINAL BLOCK ── */
-    .terminal {
-      background: rgba(0,212,255,0.03);
-      border: 1px solid rgba(0,212,255,0.12);
-      border-radius: 6px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 2.5rem;
-      text-align: left;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--muted);
-      animation: fadeUp 0.8s 0.5s ease both;
-    }
-    .terminal .line { margin-bottom: 0.3rem; }
-    .terminal .prompt { color: var(--accent); margin-right: 0.5rem; }
-    .terminal .ok { color: #00ff88; }
-    .terminal .err { color: var(--danger); }
-    .terminal .cursor {
-      display: inline-block;
-      width: 8px; height: 14px;
-      background: var(--accent);
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-
-    /* ── BUTTONS ── */
-    .actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeUp 0.8s 0.6s ease both;
-    }
-
-    .btn {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
-      padding: 0.75rem 1.75rem;
-      border-radius: 3px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      color: #fff;
-      box-shadow: 0 0 20px rgba(0,102,255,0.4);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(0,212,255,0.5);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid rgba(0,212,255,0.3);
-    }
-    .btn-ghost:hover {
-      background: rgba(0,212,255,0.07);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    /* ── LOGO ── */
-    .logo {
-      position: fixed;
-      top: 1.5rem;
-      left: 1.75rem;
-      z-index: 10;
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .logo-dot {
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent);
-      animation: pulse 2s ease infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    /* ── STATUS BAR ── */
-    .status-bar {
-      position: fixed;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--muted);
-      display: flex;
-      gap: 2rem;
-      z-index: 10;
-      white-space: nowrap;
-    }
-    .status-bar span { display: flex; align-items: center; gap: 0.4rem; }
-    .status-bar .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--danger);
-    }
-    .status-bar .dot.ok { background: #00ff88; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 480px) {
-      .status-bar { display: none; }
-      .logo { font-size: 0.72rem; }
-      .terminal { font-size: 0.72rem; }
-    }
-  </style>
+        @media (max-width: 600px) {
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn-primary, .btn-outline {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
+    <div class="container">
+        <div class="error-code">404</div>
+        <h1 class="title">Qáte payda boldı</h1>
+        <p class="description">
+            Siz izlegen bet joq yamasa basqa mánzilge kóshirilgen. <br>
+            Qátelik jibergenimiz ushın keshiresiz.
+        </p>
 
-  <div class="logo">
-    <div class="logo-dot"></div>
-    IT DATA ZONE
-  </div>
-
-  <div class="container">
-    <div class="badge">// ERROR_CODE :: 404</div>
-
-    <div class="error-code">404</div>
-
-    <div class="divider"><div class="divider-dot"></div></div>
-
-    <h1 class="title">Страница не найдена</h1>
-    <p class="subtitle">
-      Запрашиваемый маршрут не существует<br>
-      или был перемещён на другой адрес.
-    </p>
-
-    <div class="terminal">
-      <div class="line"><span class="prompt">$</span> GET /requested-page HTTP/1.1</div>
-      <div class="line"><span class="err">✕ 404 Not Found</span> — resource does not exist</div>
-      <div class="line"><span class="prompt">$</span> suggest redirect → <span class="ok">/home</span></div>
-      <div class="line"><span class="prompt">$</span> <span class="cursor"></span></div>
+        <div class="btn-group">
+            <a href="/" class="btn-primary">
+                Bas betke qaytıw
+                <span>→</span>
+            </a>
+            <a href="/#courses" class="btn-outline">Kurslarǵa ótiw</a>
+        </div>
     </div>
 
-    <div class="actions">
-      <a href="/" class="btn btn-primary">⌂ На главную</a>
-      <a href="javascript:history.back()" class="btn btn-ghost">← Назад</a>
-    </div>
-  </div>
-
-  <div class="status-bar">
-    <span><div class="dot"></div> STATUS: 404</span>
-    <span><div class="dot ok"></div> SERVER: ONLINE</span>
-    <span>IT DATA ZONE © 2025</span>
-  </div>
+    <svg class="decoration" width="400" height="400" viewBox="0 0 100 100">
+        <defs>
+            <pattern id="hexagons" width="10" height="17.32" patternUnits="userSpaceOnUse" stroke="var(--accent-green)" fill="none">
+                <path d="M5 0 L10 2.88 L10 8.66 L5 11.54 L0 8.66 L0 2.88 Z" />
+            </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#hexagons)" />
+    </svg>
 
 </body>
 </html>
