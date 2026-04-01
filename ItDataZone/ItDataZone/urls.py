@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 handler404 = 'apps.user.views.custom_404'
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("6cUzHRjpuLeURg/", admin.site.urls),
     path("", include("apps.main.urls")),
 
     path("api/v1/user/", include("apps.user.urls")),
