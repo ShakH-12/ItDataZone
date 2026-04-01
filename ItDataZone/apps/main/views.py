@@ -38,3 +38,8 @@ class RuTeammatesView(View):
     def get(self, request):
         teammates = Teammate.objects.filter(is_active=True)
         return render(request, 'main/ru/teammates.html', {'teammates': teammates})
+
+
+class ReceptionsView(View):
+    def get(self, request):
+        return render(request, 'main/reception.html')

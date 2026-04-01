@@ -7,6 +7,7 @@ class Student(models.Model):
     phone = models.CharField(max_length=100, verbose_name="Phone")
     date_of_birth = models.DateField(verbose_name="Date of Birth")
     join_date = models.DateField()
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

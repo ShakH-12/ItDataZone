@@ -4,7 +4,8 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import RegisterSerializer, ResponseSerializer
+from .serializers import RegisterSerializer, ResponseSerializer, StudentSerializer
+from .models import Student
 
 
 def custom_404(request, exception):
@@ -26,3 +27,15 @@ class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         return Response(ResponseSerializer(request.user).data)
+
+
+class StudentView(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+
+class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    permission_classes = [permissions.IsAdminUser]
