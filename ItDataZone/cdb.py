@@ -23,3 +23,4 @@ for app in apps:
     os.chdir("../..")
 
 print(os.listdir())
+print(os.listdir())
