@@ -1,12 +1,11 @@
 import os
 
-# os.chdir("RepProjects/Booking")
 path = os.listdir()
 
 if "db.sqlite3" in path:
     os.remove("db.sqlite3")
 
-apps = ["apps/user", "main", "bot", "course", "team", "teammate", "group"]
+apps = ["apps/bot", "course", "group", "main", "team", "teammate", "user"]
 
 for app in apps:
     path = os.listdir(app)

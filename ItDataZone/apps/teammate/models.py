@@ -11,7 +11,7 @@ class Role(models.Model):
 
 
 class Teammate(models.Model):
-    photo = models.ImageField(verbose_name="Photo")
+    photo = models.ImageField(verbose_name="Photo", upload_to="teammate_images/")
     full_name = models.CharField(validators=[MinLengthValidator(5)], max_length=100, verbose_name="Full Name", db_index=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE, verbose_name="Role")
     about = models.TextField(validators=[MaxLengthValidator(1000)], verbose_name="About")
