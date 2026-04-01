@@ -6,261 +6,240 @@
 <title>IT DATA ZONE | Resepshen</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:        #071a12;
-    --bg2:       #0b2318;
-    --bg3:       #0f2d1f;
-    --border:    #1a4a30;
-    --accent:    #22c55e;
-    --accent2:   #16a34a;
-    --accent-dim: rgba(34,197,94,0.12);
-    --text:      #e8f5ee;
-    --text2:     #7aad8e;
-    --text3:     #3d6e52;
-    --danger:    #f87171;
-    --radius:    12px;
-    --radius-lg: 18px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='92' viewBox='0 0 80 92'%3E%3Cpolygon points='40,2 78,22 78,62 40,82 2,62 2,22' fill='none' stroke='%231a4a30' stroke-width='1'/%3E%3C/svg%3E");
-    background-size: 80px 92px;
-    opacity: 0.35;
-    pointer-events: none; z-index: 0;
-  }
+:root {
+  --bg:#071a12; --bg2:#0b2318; --bg3:#0f2d1f;
+  --border:#1a4a30; --accent:#22c55e; --accent2:#16a34a;
+  --accent-dim:rgba(34,197,94,0.12); --accent-glow:rgba(34,197,94,0.2);
+  --text:#e8f5ee; --text2:#7aad8e; --text3:#3d6e52;
+  --danger:#f87171; --warn:#fbbf24;
+  --radius:12px; --radius-lg:18px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='92' viewBox='0 0 80 92'%3E%3Cpolygon points='40,2 78,22 78,62 40,82 2,62 2,22' fill='none' stroke='%231a4a30' stroke-width='1'/%3E%3C/svg%3E");background-size:80px 92px;opacity:.35;pointer-events:none;z-index:0;}
 
-  /* ── LOGIN SCREEN ── */
-  #loginScreen {
-    display: none;
-    position: fixed; inset: 0; z-index: 500;
-    align-items: center; justify-content: center;
-    padding: 24px;
-    background: var(--bg);
-  }
-  #loginScreen.show { display: flex; }
-  .login-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 40px;
-    width: 100%; max-width: 420px;
-    position: relative; z-index: 1;
-    animation: slideUp 0.3s ease;
-  }
-  .login-logo {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 32px;
-  }
-  .login-logo-icon {
-    width: 44px; height: 44px;
-    background: var(--accent); border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-  }
-  .login-logo-text { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; }
-  .login-logo-text span { color: var(--accent); }
-  .login-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; margin-bottom: 6px; }
-  .login-sub { color: var(--text2); font-size: 14px; margin-bottom: 28px; }
-  .login-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-  .login-field label {
-    font-size: 11px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3);
-  }
-  .login-field input {
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 12px 16px;
-    color: var(--text); font-family: inherit; font-size: 15px;
-    outline: none; transition: border-color 0.2s; width: 100%;
-  }
-  .login-field input::placeholder { color: var(--text3); }
-  .login-field input:focus { border-color: var(--accent); }
-  .login-error {
-    display: none;
-    background: rgba(248,113,113,0.1);
-    border: 1px solid rgba(248,113,113,0.3);
-    border-radius: var(--radius);
-    padding: 10px 14px; color: var(--danger);
-    font-size: 13px; margin-bottom: 16px;
-  }
-  .login-error.show { display: block; }
-  .login-btn {
-    width: 100%; background: var(--accent); color: #071a12;
-    border: none; border-radius: var(--radius); padding: 13px;
-    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800;
-    cursor: pointer; transition: all 0.2s; margin-top: 8px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .login-btn:hover { background: var(--accent2); transform: translateY(-1px); }
-  .login-btn:disabled { opacity: 0.6; transform: none; cursor: not-allowed; }
-  .login-spinner {
-    width: 18px; height: 18px;
-    border: 2px solid rgba(7,26,18,0.3); border-top-color: #071a12;
-    border-radius: 50%; animation: spin 0.7s linear infinite; display: none;
-  }
-  .login-spinner.show { display: block; }
+/* ── LOGIN ── */
+#loginScreen{display:none;position:fixed;inset:0;z-index:500;align-items:center;justify-content:center;padding:24px;background:var(--bg);}
+#loginScreen.show{display:flex;}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;width:100%;max-width:420px;position:relative;z-index:1;animation:slideUp .3s ease;}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
+.login-logo-icon{width:44px;height:44px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.login-logo-text{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
+.login-logo-text span{color:var(--accent);}
+.login-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px;}
+.login-sub{color:var(--text2);font-size:14px;margin-bottom:28px;}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.login-field label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);}
+.login-field input{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;color:var(--text);font-family:inherit;font-size:15px;outline:none;transition:border-color .2s;width:100%;}
+.login-field input::placeholder{color:var(--text3);}
+.login-field input:focus{border-color:var(--accent);}
+.login-error{display:none;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:var(--radius);padding:10px 14px;color:var(--danger);font-size:13px;margin-bottom:16px;}
+.login-error.show{display:block;}
+.login-btn{width:100%;background:var(--accent);color:#071a12;border:none;border-radius:var(--radius);padding:13px;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.login-btn:hover{background:var(--accent2);transform:translateY(-1px);}
+.login-btn:disabled{opacity:.6;transform:none;cursor:not-allowed;}
+.login-spinner{width:18px;height:18px;border:2px solid rgba(7,26,18,.3);border-top-color:#071a12;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+.login-spinner.show{display:block;}
 
-  /* ── APP SCREEN ── */
-  #appScreen { display: none; }
-  #appScreen.show { display: block; }
+/* ── APP ── */
+#appScreen{display:none;}
+#appScreen.show{display:block;}
 
-  /* NAVBAR */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(7,26,18,0.92); backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px; height: 64px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); }
-  .logo span { color: var(--accent); }
-  .logo-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-  .nav-right { display: flex; align-items: center; gap: 12px; }
-  .nav-user {
-    display: flex; align-items: center; gap: 8px;
-    background: var(--accent-dim); border: 1px solid var(--border);
-    border-radius: 100px; padding: 5px 14px 5px 5px; font-size: 13px;
-  }
-  .nav-user-avatar {
-    width: 26px; height: 26px; background: var(--accent); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; color: #071a12;
-  }
-  .logout-btn {
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 8px; color: var(--text2);
-    font-size: 13px; font-family: inherit; padding: 6px 12px;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+/* NAVBAR */
+nav{position:sticky;top:0;z-index:100;background:rgba(7,26,18,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);}
+.logo span{color:var(--accent);}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-user{display:flex;align-items:center;gap:8px;background:var(--accent-dim);border:1px solid var(--border);border-radius:100px;padding:5px 14px 5px 5px;font-size:13px;}
+.nav-user-avatar{width:26px;height:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#071a12;}
+.logout-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:13px;font-family:inherit;padding:6px 12px;cursor:pointer;transition:all .15s;}
+.logout-btn:hover{border-color:var(--danger);color:var(--danger);}
 
-  /* LAYOUT */
-  .container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-  .page-header { margin-bottom: 32px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  .page-header h1 { font-family: 'Syne', sans-serif; font-size: clamp(24px,4vw,36px); font-weight: 800; line-height: 1.1; }
-  .page-header h1 span { color: var(--accent); }
-  .page-header p { color: var(--text2); font-size: 14px; margin-top: 4px; }
+/* TABS */
+.tabs-bar{position:sticky;top:64px;z-index:90;background:rgba(7,26,18,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;}
+.tab-btn{padding:16px 24px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text3);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;margin-bottom:-1px;}
+.tab-btn:hover{color:var(--text2);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab-count{background:var(--accent-dim);border:1px solid var(--border);color:var(--accent);font-size:11px;font-weight:700;padding:2px 7px;border-radius:100px;min-width:20px;text-align:center;}
+.tab-btn.active .tab-count{background:var(--accent);color:#071a12;border-color:var(--accent);}
 
-  /* STATS */
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 12px; margin-bottom: 28px; }
-  .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; position: relative; overflow: hidden; }
-  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
-  .stat-val { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--accent); }
-  .stat-label { color: var(--text2); font-size: 12px; margin-top: 2px; }
+/* TAB PANELS */
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
 
-  /* TOOLBAR */
-  .toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-  .search-wrap { flex: 1; min-width: 200px; position: relative; }
-  .search-wrap input { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px 10px 42px; color: var(--text); font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
-  .search-wrap input::placeholder { color: var(--text3); }
-  .search-wrap input:focus { border-color: var(--accent); }
-  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text3); pointer-events: none; font-size: 16px; }
-  .filter-select { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; color: var(--text); font-family: inherit; font-size: 14px; outline: none; cursor: pointer; }
-  .filter-select:focus { border-color: var(--accent); }
+/* CONTAINER */
+.container{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:32px 24px;}
+.page-header{margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.page-header h1{font-family:'Syne',sans-serif;font-size:clamp(22px,4vw,34px);font-weight:800;line-height:1.1;}
+.page-header h1 span{color:var(--accent);}
+.page-header p{color:var(--text2);font-size:14px;margin-top:4px;}
 
-  /* BUTTONS */
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
-  .btn-primary { background: var(--accent); color: #071a12; }
-  .btn-primary:hover { background: #16a34a; transform: translateY(-1px); }
-  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger { background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); color: var(--danger); }
-  .btn-danger:hover { background: rgba(248,113,113,0.2); }
-  .btn-sm { padding: 6px 12px; font-size: 13px; }
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:28px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);}
+.stat-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent);}
+.stat-label{color:var(--text2);font-size:12px;margin-top:2px;}
 
-  /* TABLE */
-  .table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 700px; }
-  thead { background: var(--bg3); }
-  th { padding: 14px 16px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); border-bottom: 1px solid var(--border); white-space: nowrap; }
-  th.sortable { cursor: pointer; user-select: none; }
-  th.sortable:hover { color: var(--accent); }
-  td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid rgba(26,74,48,0.5); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tbody tr { transition: background 0.15s; }
-  tbody tr:hover { background: var(--accent-dim); }
-  .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 100px; font-size: 12px; font-weight: 500; }
-  .badge-active { background: rgba(34,197,94,0.15); color: var(--accent); border: 1px solid rgba(34,197,94,0.3); }
-  .badge-inactive { background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.25); }
-  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-  .actions-cell { display: flex; gap: 6px; align-items: center; }
-  .empty-state { text-align: center; padding: 64px 24px; color: var(--text3); }
-  .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
-  .empty-state p { font-size: 15px; }
-  .loading-row td { text-align: center; padding: 48px; color: var(--text3); }
-  .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+.search-wrap{flex:1;min-width:200px;position:relative;}
+.search-wrap input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px 10px 42px;color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s;}
+.search-wrap input::placeholder{color:var(--text3);}
+.search-wrap input:focus{border-color:var(--accent);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;font-size:16px;}
+.filter-select{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;color:var(--text);font-family:inherit;font-size:14px;outline:none;cursor:pointer;}
+.filter-select:focus{border-color:var(--accent);}
 
-  /* PAGINATION */
-  .pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
-  .pagination-info { color: var(--text2); font-size: 13px; }
-  .pagination-btns { display: flex; gap: 6px; }
-  .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); font-size: 13px; font-family: inherit; cursor: pointer; transition: all 0.15s; }
-  .page-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .page-btn.active { background: var(--accent); border-color: var(--accent); color: #071a12; font-weight: 700; }
-  .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .2s;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:#071a12;}
+.btn-primary:hover{background:#16a34a;transform:translateY(-1px);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-danger{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);color:var(--danger);}
+.btn-danger:hover{background:rgba(248,113,113,.2);}
+.btn-warn{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--warn);}
+.btn-warn:hover{background:rgba(251,191,36,.2);}
+.btn-sm{padding:6px 12px;font-size:13px;}
+.btn-xs{padding:4px 9px;font-size:12px;}
 
-  /* MODAL */
-  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(7,26,18,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 24px; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; position: relative; animation: slideUp 0.25s ease; }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .modal-header { padding: 24px 24px 0; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-  .modal-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; }
-  .modal-title span { color: var(--accent); }
-  .modal-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-size: 18px; transition: all 0.15s; }
-  .modal-close:hover { border-color: var(--danger); color: var(--danger); }
-  .modal-body { padding: 0 24px 24px; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group.full { grid-column: 1/-1; }
-  label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); }
-  .required::after { content: ' *'; color: var(--accent); }
-  input, select { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; color: var(--text); font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; width: 100%; }
-  input::placeholder { color: var(--text3); }
-  input:focus, select:focus { border-color: var(--accent); }
-  input.error, select.error { border-color: var(--danger); }
-  .err-msg { font-size: 12px; color: var(--danger); margin-top: 2px; display: none; }
-  .err-msg.show { display: block; }
-  .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+/* TABLE */
+.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:600px;}
+thead{background:var(--bg3);}
+th{padding:13px 16px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);border-bottom:1px solid var(--border);white-space:nowrap;}
+th.sortable{cursor:pointer;user-select:none;}
+th.sortable:hover{color:var(--accent);}
+td{padding:13px 16px;font-size:14px;border-bottom:1px solid rgba(26,74,48,.5);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tbody tr{transition:background .15s;}
+tbody tr:hover{background:var(--accent-dim);}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:12px;font-weight:500;}
+.badge-active{background:rgba(34,197,94,.15);color:var(--accent);border:1px solid rgba(34,197,94,.3);}
+.badge-inactive{background:rgba(248,113,113,.1);color:var(--danger);border:1px solid rgba(248,113,113,.25);}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.actions-cell{display:flex;gap:6px;align-items:center;}
+.empty-state{text-align:center;padding:56px 24px;color:var(--text3);}
+.empty-state .icon{font-size:44px;margin-bottom:14px;}
+.empty-state p{font-size:15px;}
+.loading-row td{text-align:center;padding:48px;color:var(--text3);}
+.spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-  /* TOAST */
-  #toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 10px; }
-  .toast-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg2); font-size: 14px; animation: toastIn 0.3s ease; min-width: 240px; max-width: 340px; }
-  @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-  .toast-item.success { border-color: rgba(34,197,94,0.4); }
-  .toast-item.error   { border-color: rgba(248,113,113,0.4); }
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;}
+.pagination-info{color:var(--text2);font-size:13px;}
+.pagination-btns{display:flex;gap:6px;}
+.page-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:13px;font-family:inherit;cursor:pointer;transition:all .15s;}
+.page-btn:hover{border-color:var(--accent);color:var(--accent);}
+.page-btn.active{background:var(--accent);border-color:var(--accent);color:#071a12;font-weight:700;}
+.page-btn:disabled{opacity:.3;cursor:not-allowed;}
 
-  /* CONFIRM */
-  .confirm-overlay { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(7,26,18,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
-  .confirm-overlay.open { display: flex; }
-  .confirm-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; max-width: 400px; width: 90%; text-align: center; animation: slideUp 0.2s ease; }
-  .confirm-box h3 { font-family: 'Syne', sans-serif; font-size: 18px; margin-bottom: 10px; }
-  .confirm-box p { color: var(--text2); font-size: 14px; margin-bottom: 24px; }
-  .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+/* ── GROUP CARDS ── */
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+.group-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer;}
+.group-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.group-card-head{padding:20px 20px 16px;border-bottom:1px solid var(--border);}
+.group-card-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.group-card-desc{color:var(--text2);font-size:13px;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.group-card-body{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.group-meta{display:flex;align-items:center;gap:14px;}
+.group-meta-item{display:flex;align-items:center;gap:5px;color:var(--text2);font-size:13px;}
+.group-actions{display:flex;gap:6px;}
 
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .form-group.full { grid-column: 1; }
-    .page-header { flex-direction: column; align-items: flex-start; }
-    nav { padding: 0 16px; }
-    .container { padding: 20px 16px; }
-    .login-card { padding: 28px 20px; }
-    .nav-right { gap: 8px; }
-  }
+/* ── GROUP DETAIL DRAWER ── */
+.drawer-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(7,26,18,.75);backdrop-filter:blur(6px);}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:100%;max-width:560px;background:var(--bg2);border-left:1px solid var(--border);z-index:201;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease;}
+.drawer.open{transform:translateX(0);}
+.drawer-header{padding:24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:sticky;top:0;background:var(--bg2);z-index:1;}
+.drawer-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
+.drawer-title span{color:var(--accent);}
+.drawer-close{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:18px;transition:all .15s;flex-shrink:0;}
+.drawer-close:hover{border-color:var(--danger);color:var(--danger);}
+.drawer-body{padding:24px;}
+.drawer-section{margin-bottom:28px;}
+.drawer-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.drawer-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.info-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;}
+.info-item-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.info-item-val{font-size:14px;font-weight:600;}
+
+/* students in drawer */
+.drawer-student-list{display:flex;flex-direction:column;gap:8px;}
+.drawer-student-item{display:flex;align-items:center;gap:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px;transition:border-color .15s;}
+.drawer-student-item:hover{border-color:var(--border);}
+.student-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.student-info{flex:1;min-width:0;}
+.student-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.student-phone{font-size:12px;color:var(--text2);}
+
+/* add student to group */
+.add-student-bar{display:flex;gap:10px;margin-bottom:16px;}
+.add-student-bar select{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;color:var(--text);font-family:inherit;font-size:14px;outline:none;}
+.add-student-bar select:focus{border-color:var(--accent);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(7,26,18,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative;animation:slideUp .25s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.modal-header{padding:24px 24px 0;display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
+.modal-title span{color:var(--accent);}
+.modal-close{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:18px;transition:all .15s;}
+.modal-close:hover{border-color:var(--danger);color:var(--danger);}
+.modal-body{padding:0 24px 24px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);}
+.required::after{content:' *';color:var(--accent);}
+input,select,textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+textarea{resize:vertical;min-height:80px;}
+input::placeholder,textarea::placeholder{color:var(--text3);}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+input.error,select.error{border-color:var(--danger);}
+.err-msg{font-size:12px;color:var(--danger);margin-top:2px;display:none;}
+.err-msg.show{display:block;}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--border);}
+
+/* CONFIRM */
+.confirm-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(7,26,18,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;}
+.confirm-overlay.open{display:flex;}
+.confirm-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;max-width:400px;width:90%;text-align:center;animation:slideUp .2s ease;}
+.confirm-box h3{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:10px;}
+.confirm-box p{color:var(--text2);font-size:14px;margin-bottom:24px;}
+.confirm-actions{display:flex;gap:10px;justify-content:center;}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:10px;}
+.toast-item{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);font-size:14px;animation:toastIn .3s ease;min-width:240px;max-width:340px;}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+.toast-item.success{border-color:rgba(34,197,94,.4);}
+.toast-item.error{border-color:rgba(248,113,113,.4);}
+
+@media(max-width:640px){
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full{grid-column:1;}
+  .page-header{flex-direction:column;align-items:flex-start;}
+  nav{padding:0 16px;}
+  .container{padding:20px 16px;}
+  .login-card{padding:28px 20px;}
+  .drawer{max-width:100%;}
+  .info-grid{grid-template-columns:1fr;}
+  .tabs-bar{padding:0 16px;}
+  .tab-btn{padding:14px 16px;font-size:13px;}
+  .groups-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN SCREEN ══ -->
+<!-- ══ LOGIN ══ -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -268,19 +247,16 @@
       <div class="login-logo-text">IT <span>DATA</span> ZONE</div>
     </div>
     <div class="login-title">Sistemaga <span style="color:var(--accent)">kiriw</span></div>
-    <div class="login-sub">Reseption paneliga kirisiw ushın maǵlıwmatlardı kirgiziń</div>
-
+    <div class="login-sub">Resepshen paneliga kirisiw ushın maǵlıwmatlardı kirgiziń</div>
     <div class="login-error" id="loginError"></div>
-
     <div class="login-field">
-      <label>Paydalanıwshı (Username)</label>
+      <label>Foydalanıwshı</label>
       <input type="text" id="loginUsername" placeholder="username" autocomplete="username">
     </div>
     <div class="login-field">
       <label>Parol</label>
       <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
     </div>
-
     <button class="login-btn" id="loginBtn" onclick="doLogin()">
       <div class="login-spinner" id="loginSpinner"></div>
       <span id="loginBtnText">Kiriw →</span>
@@ -288,13 +264,10 @@
   </div>
 </div>
 
-<!-- ══ APP SCREEN ══ -->
+<!-- ══ APP ══ -->
 <div id="appScreen">
   <nav>
-    <div class="logo">
-      <div class="logo-icon">⬡</div>
-      IT <span>DATA</span> ZONE
-    </div>
+    <div class="logo"><div class="logo-icon">⬡</div>IT <span>DATA</span> ZONE</div>
     <div class="nav-right">
       <div class="nav-user">
         <div class="nav-user-avatar" id="navAvatar">R</div>
@@ -304,67 +277,108 @@
     </div>
   </nav>
 
-  <div class="container">
-    <div class="page-header">
-      <div>
-        <h1>Studentler <span>basqarıwı</span></h1>
-        <p>Studentlerdı qosıń, izleń hám redaktlaw eteń</p>
+  <!-- TABS BAR -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" id="tab-students-btn" onclick="switchTab('students')">
+      🎓 Studentler <span class="tab-count" id="tc-students">0</span>
+    </button>
+    <button class="tab-btn" id="tab-groups-btn" onclick="switchTab('groups')">
+      👥 Gruplar <span class="tab-count" id="tc-groups">0</span>
+    </button>
+  </div>
+
+  <!-- ── TAB: STUDENTS ── -->
+  <div class="tab-panel active" id="tab-students">
+    <div class="container">
+      <div class="page-header">
+        <div>
+          <h1>Studentler <span>basqarıwı</span></h1>
+          <p>Studentlerdı qosıń, izleń hám redaktlaw eteń</p>
+        </div>
+        <button class="btn btn-primary" onclick="openStudentModal()">+ Jańa student</button>
       </div>
-      <button class="btn btn-primary" onclick="openModal()">+ Jańa student</button>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-label">Jámi studentler</div></div>
-      <div class="stat-card"><div class="stat-val" id="stat-active">—</div><div class="stat-label">Aktiv</div></div>
-      <div class="stat-card"><div class="stat-val" id="stat-inactive">—</div><div class="stat-label">Aktiv emes</div></div>
-      <div class="stat-card"><div class="stat-val" id="stat-today">—</div><div class="stat-label">Bügün qosılgan</div></div>
-    </div>
-
-    <div class="toolbar">
-      <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="FIO yamasa telefon boyınsha izleń..." oninput="handleSearch()">
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-label">Jámi</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-active">—</div><div class="stat-label">Aktiv</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-inactive">—</div><div class="stat-label">Aktiv emes</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-today">—</div><div class="stat-label">Bügün qosılgan</div></div>
       </div>
-      <select class="filter-select" id="filterStatus" onchange="handleSearch()">
-        <option value="">Barlıq studentler</option>
-        <option value="true">Aktiv</option>
-        <option value="false">Aktiv emes</option>
-      </select>
-      <button class="btn btn-ghost" onclick="loadStudents()">↻ Janartıw</button>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="FIO yamasa telefon boyınsha izleń..." oninput="handleSearch()">
+        </div>
+        <select class="filter-select" id="filterStatus" onchange="handleSearch()">
+          <option value="">Barlıq</option>
+          <option value="true">Aktiv</option>
+          <option value="false">Aktiv emes</option>
+        </select>
+        <button class="btn btn-ghost" onclick="loadStudents()">↻</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
             <th>#</th>
-            <th class="sortable" onclick="sortBy('fio')">FIO ⇅</th>
+            <th class="sortable" onclick="sortStudents('fio')">FIO ⇅</th>
             <th>Telefon</th>
             <th>Email</th>
-            <th class="sortable" onclick="sortBy('join_date')">Qosılgan kúni ⇅</th>
+            <th class="sortable" onclick="sortStudents('join_date')">Qosılgan ⇅</th>
             <th>Jası</th>
             <th>Jag'day</th>
             <th>Ámeliyatlar</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <tr class="loading-row"><td colspan="8"><div class="spinner"></div><div>Júkleniwde...</div></td></tr>
-        </tbody>
-      </table>
-      <div class="pagination" id="paginationWrap" style="display:none">
-        <div class="pagination-info" id="paginInfo"></div>
-        <div class="pagination-btns" id="paginBtns"></div>
+          </tr></thead>
+          <tbody id="tableBody">
+            <tr class="loading-row"><td colspan="8"><div class="spinner"></div><div>Júkleniwde...</div></td></tr>
+          </tbody>
+        </table>
+        <div class="pagination" id="paginationWrap" style="display:none">
+          <div class="pagination-info" id="paginInfo"></div>
+          <div class="pagination-btns" id="paginBtns"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: GROUPS ── -->
+  <div class="tab-panel" id="tab-groups">
+    <div class="container">
+      <div class="page-header">
+        <div>
+          <h1>Gruplar <span>basqarıwı</span></h1>
+          <p>Grupları kóriń, ózgertıń, student qosıń yáki alıp taslań</p>
+        </div>
+        <button class="btn btn-primary" onclick="openGroupModal()">+ Jańa grup</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-val" id="gstat-total">—</div><div class="stat-label">Jámi gruplar</div></div>
+        <div class="stat-card"><div class="stat-val" id="gstat-active">—</div><div class="stat-label">Aktiv</div></div>
+        <div class="stat-card"><div class="stat-val" id="gstat-students">—</div><div class="stat-label">Jámi studentler</div></div>
+      </div>
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="groupSearch" placeholder="Grup atı boyınsha izleń..." oninput="renderGroups()">
+        </div>
+        <select class="filter-select" id="groupFilterStatus" onchange="renderGroups()">
+          <option value="">Barlıq</option>
+          <option value="true">Aktiv</option>
+          <option value="false">Aktiv emes</option>
+        </select>
+        <button class="btn btn-ghost" onclick="loadGroups()">↻</button>
+      </div>
+      <div id="groupsContainer">
+        <div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Júkleniwde...</p></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- ══ STUDENT MODAL ══ -->
-<div class="modal-overlay" id="modalOverlay">
+<div class="modal-overlay" id="studentModalOverlay">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title" id="modalTitle">Jańa <span>student</span></div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-title" id="studentModalTitle">Jańa <span>student</span></div>
+      <button class="modal-close" onclick="closeStudentModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
@@ -374,7 +388,7 @@
           <span class="err-msg" id="e_fio">FIO toltırıw shárt</span>
         </div>
         <div class="form-group">
-          <label class="required">Telefon nomer</label>
+          <label class="required">Telefon</label>
           <input type="tel" id="f_phone" placeholder="+998901234567">
           <span class="err-msg" id="e_phone">Telefon toltırıw shárt</span>
         </div>
@@ -395,15 +409,80 @@
         </div>
         <div class="form-group full">
           <label>Jag'day</label>
-          <select id="f_active">
-            <option value="true">✅ Aktiv</option>
-            <option value="false">❌ Aktiv emes</option>
-          </select>
+          <select id="f_active"><option value="true">✅ Aktiv</option><option value="false">❌ Aktiv emes</option></select>
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn btn-ghost" onclick="closeModal()">Biykar etıw</button>
-        <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">Qosıw</button>
+        <button class="btn btn-ghost" onclick="closeStudentModal()">Biykar etıw</button>
+        <button class="btn btn-primary" id="studentSubmitBtn" onclick="submitStudentForm()">Qosıw</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GROUP MODAL ══ -->
+<div class="modal-overlay" id="groupModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="groupModalTitle">Jańa <span>grup</span></div>
+      <button class="modal-close" onclick="closeGroupModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="required">Grup atı</label>
+          <input type="text" id="g_name" placeholder="Python Basics #1">
+          <span class="err-msg" id="ge_name">Grup atın toltırıń</span>
+        </div>
+        <div class="form-group full">
+          <label>Sıpatlama</label>
+          <textarea id="g_desc" placeholder="Qısqasha sıpatlama..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="required">Mentor</label>
+          <select id="g_mentor">
+            <option value="">— Mentor tańlań —</option>
+          </select>
+          <span class="err-msg" id="ge_mentor">Mentor tańlaw shárt</span>
+        </div>
+        <div class="form-group full">
+          <label>Jag'day</label>
+          <select id="g_active"><option value="true">✅ Aktiv</option><option value="false">❌ Aktiv emes</option></select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeGroupModal()">Biykar etıw</button>
+        <button class="btn btn-primary" id="groupSubmitBtn" onclick="submitGroupForm()">Qosıw</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GROUP DETAIL DRAWER ══ -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="groupDrawer">
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-title" id="drawerTitle">Grup <span>detallı</span></div>
+      <div style="color:var(--text2);font-size:13px;margin-top:4px" id="drawerSubtitle"></div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <!-- Info -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Maǵlıwmatlar</div>
+      <div class="info-grid" id="drawerInfo"></div>
+    </div>
+    <!-- Students -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Studentler <span id="drawerStudentCount" style="color:var(--accent);font-weight:800"></span></div>
+      <div class="add-student-bar">
+        <select id="addStudentSelect"><option value="">— Student tańlań —</option></select>
+        <button class="btn btn-primary btn-sm" onclick="addStudentToGroup()">+ Qosıw</button>
+      </div>
+      <div class="drawer-student-list" id="drawerStudentList">
+        <div style="color:var(--text3);font-size:14px;text-align:center;padding:24px">Studentler joq</div>
       </div>
     </div>
   </div>
@@ -413,242 +492,155 @@
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-box">
     <h3>⚠️ Ámiyatlastırıw</h3>
-    <p id="confirmMsg">Bul studentti óshiriw shárt pe?</p>
+    <p id="confirmMsg"></p>
     <div class="confirm-actions">
       <button class="btn btn-ghost" onclick="closeConfirm()">Joq</button>
-      <button class="btn btn-danger" id="confirmOkBtn">Óshiriw</button>
+      <button class="btn btn-danger" id="confirmOkBtn">Ámiyatlaw</button>
     </div>
   </div>
 </div>
 
-<!-- ══ TOAST ══ -->
 <div id="toast"></div>
 
 <script>
-const API         = '/api/v1/user/student/';
-const TOKEN_URL   = '/api/token/';
-const REFRESH_URL = '/api/token/refresh/';
-const ACCESS_KEY  = 'itdz_access';
-const REFRESH_KEY = 'itdz_refresh';
-const USER_KEY    = 'itdz_user';
+// ══ CONSTANTS ══
+const STUDENT_API  = '/api/v1/user/student/';
+const GROUP_API    = '/api/v1/group/';
+const TEAMMATE_API = '/api/v1/teammate/';
+const TOKEN_URL    = '/api/token/';
+const REFRESH_URL  = '/api/token/refresh/';
+const ACCESS_KEY   = 'itdz_access';
+const REFRESH_KEY  = 'itdz_refresh';
+const USER_KEY     = 'itdz_user';
 
-let allStudents = [];
-let filtered    = [];
-let editingId   = null;
-let currentPage = 1;
-const PER_PAGE  = 15;
-let sortKey     = null;
-let sortDir     = 1;
+// ══ STATE ══
+let allStudents   = [];
+let filteredStudents = [];
+let allGroups     = [];
+let allMentors    = [];
+let studentPage   = 1;
+const PER_PAGE    = 15;
+let sSortKey      = null;
+let sSortDir      = 1;
+let editingStudentId = null;
+let editingGroupId   = null;
+let activeGroupId    = null; // drawer
 
-// ── TOKEN ──
+// ══ TOKEN ══
 const getAccess  = () => localStorage.getItem(ACCESS_KEY);
 const getRefresh = () => localStorage.getItem(REFRESH_KEY);
 const getUser    = () => localStorage.getItem(USER_KEY) || 'Resepshen';
+function saveTokens(a,r,u){ localStorage.setItem(ACCESS_KEY,a); if(r) localStorage.setItem(REFRESH_KEY,r); if(u) localStorage.setItem(USER_KEY,u); }
+function clearTokens(){ [ACCESS_KEY,REFRESH_KEY,USER_KEY].forEach(k=>localStorage.removeItem(k)); }
+function authHeaders(){ return {'Content-Type':'application/json','Authorization':`Bearer ${getAccess()}`}; }
 
-function saveTokens(access, refresh, username) {
-  localStorage.setItem(ACCESS_KEY, access);
-  if (refresh)  localStorage.setItem(REFRESH_KEY, refresh);
-  if (username) localStorage.setItem(USER_KEY, username);
+async function tryRefresh(){
+  const r=getRefresh(); if(!r) return false;
+  try{
+    const res=await fetch(REFRESH_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({refresh:r})});
+    if(!res.ok) return false;
+    const d=await res.json(); saveTokens(d.access,d.refresh||r,null); return true;
+  }catch{return false;}
 }
-function clearTokens() {
-  [ACCESS_KEY, REFRESH_KEY, USER_KEY].forEach(k => localStorage.removeItem(k));
-}
-function authHeaders() {
-  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getAccess()}` };
-}
-
-async function tryRefresh() {
-  const refresh = getRefresh();
-  if (!refresh) return false;
-  try {
-    const res = await fetch(REFRESH_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refresh })
-    });
-    if (!res.ok) return false;
-    const data = await res.json();
-    saveTokens(data.access, data.refresh || getRefresh(), null);
-    return true;
-  } catch { return false; }
-}
-
-// fetch wrapper — auto refresh on 401
-async function apiFetch(url, opts = {}) {
-  opts.headers = { ...authHeaders(), ...(opts.headers || {}) };
-  let res = await fetch(url, opts);
-  if (res.status === 401) {
-    const ok = await tryRefresh();
-    if (ok) {
-      opts.headers = { ...authHeaders(), ...(opts.headers || {}) };
-      res = await fetch(url, opts);
-    }
-    if (res.status === 401) {
-      showLogin();
-      throw new Error('UNAUTHORIZED');
-    }
+async function apiFetch(url,opts={}){
+  opts.headers={...authHeaders(),...(opts.headers||{})};
+  let res=await fetch(url,opts);
+  if(res.status===401){
+    const ok=await tryRefresh();
+    if(ok){ opts.headers={...authHeaders(),...(opts.headers||{})}; res=await fetch(url,opts); }
+    if(res.status===401){ showLogin(); throw new Error('UNAUTHORIZED'); }
   }
   return res;
 }
 
-// ── SCREENS ──
-function showLogin() {
-  clearTokens();
-  document.getElementById('loginScreen').classList.add('show');
-  document.getElementById('appScreen').classList.remove('show');
-}
-function showApp() {
-  const u = getUser();
-  document.getElementById('navUsername').textContent = u;
-  document.getElementById('navAvatar').textContent   = u[0].toUpperCase();
-  document.getElementById('loginScreen').classList.remove('show');
-  document.getElementById('appScreen').classList.add('show');
-}
+// ══ SCREENS ══
+function showLogin(){ clearTokens(); document.getElementById('loginScreen').classList.add('show'); document.getElementById('appScreen').classList.remove('show'); }
+function showApp(){ const u=getUser(); document.getElementById('navUsername').textContent=u; document.getElementById('navAvatar').textContent=u[0].toUpperCase(); document.getElementById('loginScreen').classList.remove('show'); document.getElementById('appScreen').classList.add('show'); }
 
-// ── LOGIN ──
-async function doLogin() {
-  const username = document.getElementById('loginUsername').value.trim();
-  const password = document.getElementById('loginPassword').value;
-  const errEl    = document.getElementById('loginError');
-  const btn      = document.getElementById('loginBtn');
-  const spinner  = document.getElementById('loginSpinner');
-  const btnText  = document.getElementById('loginBtnText');
-
+// ══ LOGIN ══
+async function doLogin(){
+  const username=document.getElementById('loginUsername').value.trim();
+  const password=document.getElementById('loginPassword').value;
+  const errEl=document.getElementById('loginError');
+  const btn=document.getElementById('loginBtn');
+  const spinner=document.getElementById('loginSpinner');
+  const btnText=document.getElementById('loginBtnText');
   errEl.classList.remove('show');
+  if(!username||!password){ errEl.textContent='⚠️ Login hám paroldı toltırıń'; errEl.classList.add('show'); return; }
+  btn.disabled=true; spinner.classList.add('show'); btnText.textContent='Kiriwde...';
+  try{
+    const res=await fetch(TOKEN_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+    if(res.status===401||res.status===400){ errEl.textContent='❌ Login yamasa parol nátıyjeli emes. Qayta urınıp kóriń'; errEl.classList.add('show'); document.getElementById('loginPassword').value=''; return; }
+    if(res.status===403){ errEl.textContent='🚫 Sizde bul sistemaga kirisiw huqıqı joq. Administratorge murajaat etiń'; errEl.classList.add('show'); return; }
+    if(!res.ok){ errEl.textContent=`⚠️ Server qátesi (${res.status}). Keyinirek urınıp kóriń`; errEl.classList.add('show'); return; }
+    const data=await res.json(); saveTokens(data.access,data.refresh,username);
+    showApp(); toast('Sistemaga kirdińiz ✓','success'); loadAll();
+  }catch(e){ errEl.textContent='❌ Tarmaqta qátelik. Internet baylanısın teksheriń'; errEl.classList.add('show'); }
+  finally{ btn.disabled=false; spinner.classList.remove('show'); btnText.textContent='Kiriw →'; }
+}
+function doLogout(){ clearTokens(); allStudents=[]; allGroups=[]; showLogin(); toast('Sistemadan shıqtıńız','success'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&document.getElementById('loginScreen').classList.contains('show')) doLogin(); });
 
-  if (!username || !password) {
-    errEl.textContent = '⚠️ Login hám paroldı toltırıń';
-    errEl.classList.add('show');
-    return;
-  }
-
-  btn.disabled = true;
-  spinner.classList.add('show');
-  btnText.textContent = 'Kiriwde...';
-
-  try {
-    const res = await fetch(TOKEN_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-
-    if (res.status === 401 || res.status === 400) {
-      errEl.textContent = '❌ Login yamasa parol nátıyjeli emes. Qayta urınıp kóriń';
-      errEl.classList.add('show');
-      document.getElementById('loginPassword').value = '';
-      return;
-    }
-    if (res.status === 403) {
-      errEl.textContent = '🚫 Sizde bul sistemaga kirisiw huqıqı joq. Administratorge murajaat etiń';
-      errEl.classList.add('show');
-      return;
-    }
-    if (!res.ok) {
-      errEl.textContent = `⚠️ Server qátesi (${res.status}). Keyinirek urınıp kóriń`;
-      errEl.classList.add('show');
-      return;
-    }
-
-    const data = await res.json();
-    saveTokens(data.access, data.refresh, username);
-    showApp();
-    toast('Sistemaga kirdińiz ✓', 'success');
-    loadStudents();
-
-  } catch (e) {
-    errEl.textContent = '❌ Tarmaqta qátelik. Internet baylanısın teksheriń';
-    errEl.classList.add('show');
-  } finally {
-    btn.disabled = false;
-    spinner.classList.remove('show');
-    btnText.textContent = 'Kiriw →';
-  }
+// ══ TABS ══
+function switchTab(tab){
+  ['students','groups'].forEach(t=>{
+    document.getElementById(`tab-${t}`).classList.toggle('active',t===tab);
+    document.getElementById(`tab-${t}-btn`).classList.toggle('active',t===tab);
+  });
 }
 
-function doLogout() {
-  clearTokens();
-  allStudents = []; filtered = [];
-  showLogin();
-  toast('Sistemadan shıqtıńız', 'success');
-}
-
-// Enter on login form
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && document.getElementById('loginScreen').classList.contains('show')) doLogin();
-});
-
-// ── INIT ──
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('f_join').value = new Date().toISOString().split('T')[0];
-  if (getAccess()) { showApp(); loadStudents(); }
+// ══ INIT ══
+window.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('f_join').value=new Date().toISOString().split('T')[0];
+  if(getAccess()){ showApp(); loadAll(); }
   else showLogin();
 });
 
-// ── LOAD STUDENTS ──
-async function loadStudents() {
-  showLoading();
-  try {
-    const res = await apiFetch(API);
-    if (!res.ok) { showTableError('Server qátesi: ' + res.status); return; }
-    const data = await res.json();
-    allStudents = Array.isArray(data) ? data : (data.results || []);
-    applyFilter();
-    updateStats();
-    toast('Maǵlıwmatlar janartıldı', 'success');
-  } catch (e) {
-    if (e.message !== 'UNAUTHORIZED') showTableError('Qátelik: ' + e.message);
-  }
+async function loadAll(){
+  await Promise.all([loadStudents(), loadGroups(), loadMentors()]);
 }
 
-function showLoading() {
-  document.getElementById('tableBody').innerHTML = `<tr class="loading-row"><td colspan="8"><div class="spinner"></div><div>Júkleniwde...</div></td></tr>`;
-  document.getElementById('paginationWrap').style.display = 'none';
+// ══════════════════════════════════
+// STUDENTS
+// ══════════════════════════════════
+async function loadStudents(){
+  showStudentLoading();
+  try{
+    const res=await apiFetch(STUDENT_API);
+    if(!res.ok){ showStudentError('Server qátesi: '+res.status); return; }
+    const data=await res.json();
+    allStudents=Array.isArray(data)?data:(data.results||[]);
+    document.getElementById('tc-students').textContent=allStudents.length;
+    applyStudentFilter(); updateStudentStats();
+  }catch(e){ if(e.message!=='UNAUTHORIZED') showStudentError('Qátelik: '+e.message); }
 }
-function showTableError(msg) {
-  document.getElementById('tableBody').innerHTML = `
-    <tr class="loading-row"><td colspan="8">
-      <div style="font-size:32px;margin-bottom:12px">⚠️</div>
-      <div style="color:var(--danger)">${msg}</div>
-      <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="loadStudents()">↻ Qayta urınıw</button></div>
-    </td></tr>`;
+function showStudentLoading(){ document.getElementById('tableBody').innerHTML=`<tr class="loading-row"><td colspan="8"><div class="spinner"></div><div>Júkleniwde...</div></td></tr>`; document.getElementById('paginationWrap').style.display='none'; }
+function showStudentError(msg){ document.getElementById('tableBody').innerHTML=`<tr class="loading-row"><td colspan="8"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="color:var(--danger)">${msg}</div><div style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="loadStudents()">↻ Qayta urınıw</button></div></td></tr>`; }
+function updateStudentStats(){
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('stat-total').textContent=allStudents.length;
+  document.getElementById('stat-active').textContent=allStudents.filter(s=>s.is_active).length;
+  document.getElementById('stat-inactive').textContent=allStudents.filter(s=>!s.is_active).length;
+  document.getElementById('stat-today').textContent=allStudents.filter(s=>s.join_date===today).length;
 }
-
-// ── STATS ──
-function updateStats() {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('stat-total').textContent    = allStudents.length;
-  document.getElementById('stat-active').textContent   = allStudents.filter(s => s.is_active).length;
-  document.getElementById('stat-inactive').textContent = allStudents.filter(s => !s.is_active).length;
-  document.getElementById('stat-today').textContent    = allStudents.filter(s => s.join_date === today).length;
-}
-
-// ── FILTER ──
-function handleSearch() { currentPage = 1; applyFilter(); }
-function applyFilter() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const status = document.getElementById('filterStatus').value;
-  filtered = allStudents.filter(s => {
-    const mq = !q || s.fio.toLowerCase().includes(q) || (s.phone && s.phone.includes(q)) || (s.email && s.email.toLowerCase().includes(q));
-    const ms = status === '' || String(s.is_active) === status;
-    return mq && ms;
+function handleSearch(){ studentPage=1; applyStudentFilter(); }
+function applyStudentFilter(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const st=document.getElementById('filterStatus').value;
+  filteredStudents=allStudents.filter(s=>{
+    const mq=!q||s.fio.toLowerCase().includes(q)||(s.phone&&s.phone.includes(q))||(s.email&&s.email.toLowerCase().includes(q));
+    const ms=st===''||String(s.is_active)===st;
+    return mq&&ms;
   });
-  if (sortKey) filtered.sort((a,b) => { const av=a[sortKey]||'',bv=b[sortKey]||''; return av<bv?-sortDir:av>bv?sortDir:0; });
-  renderTable(); renderPagination();
+  if(sSortKey) filteredStudents.sort((a,b)=>{const av=a[sSortKey]||'',bv=b[sSortKey]||'';return av<bv?-sSortDir:av>bv?sSortDir:0;});
+  renderStudentTable(); renderStudentPagination();
 }
-function sortBy(key) { sortDir = sortKey===key ? sortDir*-1 : 1; sortKey=key; applyFilter(); }
-
-// ── RENDER ──
-function renderTable() {
-  const start = (currentPage-1)*PER_PAGE;
-  const page  = filtered.slice(start, start+PER_PAGE);
-  if (!filtered.length) {
-    document.getElementById('tableBody').innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="icon">🎓</div><p>Hesh qanday student tabılmadı</p></div></td></tr>`;
-    document.getElementById('paginationWrap').style.display = 'none';
-    return;
-  }
-  document.getElementById('tableBody').innerHTML = page.map((s,i) => {
-    const age = calcAge(s.date_of_birth);
+function sortStudents(key){ sSortDir=sSortKey===key?sSortDir*-1:1; sSortKey=key; applyStudentFilter(); }
+function renderStudentTable(){
+  const start=(studentPage-1)*PER_PAGE, page=filteredStudents.slice(start,start+PER_PAGE);
+  if(!filteredStudents.length){ document.getElementById('tableBody').innerHTML=`<tr><td colspan="8"><div class="empty-state"><div class="icon">🎓</div><p>Hesh qanday student tabılmadı</p></div></td></tr>`; document.getElementById('paginationWrap').style.display='none'; return; }
+  document.getElementById('tableBody').innerHTML=page.map((s,i)=>{
+    const age=calcAge(s.date_of_birth);
     return `<tr>
       <td style="color:var(--text3);font-size:12px">${start+i+1}</td>
       <td><strong>${esc(s.fio)}</strong></td>
@@ -658,131 +650,295 @@ function renderTable() {
       <td style="color:var(--text2)">${age!==null?age+' jas':'—'}</td>
       <td><span class="badge ${s.is_active?'badge-active':'badge-inactive'}"><span class="badge-dot"></span>${s.is_active?'Aktiv':'Aktiv emes'}</span></td>
       <td><div class="actions-cell">
-        <button class="btn btn-ghost btn-sm" onclick="openEdit(${s.id})">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="confirmDelete(${s.id},'${esc(s.fio)}')">🗑</button>
+        <button class="btn btn-ghost btn-sm" onclick="openStudentModal(${s.id})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmAction('Studentti óshiriw shárt pe?','${esc(s.fio)}',()=>deleteStudent(${s.id}))">🗑</button>
       </div></td>
     </tr>`;
   }).join('');
-  document.getElementById('paginationWrap').style.display = 'flex';
+  document.getElementById('paginationWrap').style.display='flex';
 }
-
-function renderPagination() {
-  const total=filtered.length, pages=Math.ceil(total/PER_PAGE);
-  const start=(currentPage-1)*PER_PAGE+1, end=Math.min(currentPage*PER_PAGE,total);
-  document.getElementById('paginInfo').textContent = `${start}–${end} / ${total} student`;
-  let btns = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
-  for (let p=1;p<=pages;p++) {
-    if (pages>7 && p>2 && p<pages-1 && Math.abs(p-currentPage)>1) { if(p===3||p===pages-2) btns+=`<span style="color:var(--text3);padding:0 4px">…</span>`; continue; }
-    btns+=`<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+function renderStudentPagination(){
+  const total=filteredStudents.length,pages=Math.ceil(total/PER_PAGE);
+  if(total===0){document.getElementById('paginationWrap').style.display='none';return;}
+  const start=(studentPage-1)*PER_PAGE+1,end=Math.min(studentPage*PER_PAGE,total);
+  document.getElementById('paginInfo').textContent=`${start}–${end} / ${total} student`;
+  let btns=`<button class="page-btn" onclick="goStudentPage(${studentPage-1})" ${studentPage===1?'disabled':''}>‹</button>`;
+  for(let p=1;p<=pages;p++){
+    if(pages>7&&p>2&&p<pages-1&&Math.abs(p-studentPage)>1){if(p===3||p===pages-2)btns+=`<span style="color:var(--text3);padding:0 4px">…</span>`;continue;}
+    btns+=`<button class="page-btn ${p===studentPage?'active':''}" onclick="goStudentPage(${p})">${p}</button>`;
   }
-  btns+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
-  document.getElementById('paginBtns').innerHTML = btns;
+  btns+=`<button class="page-btn" onclick="goStudentPage(${studentPage+1})" ${studentPage===pages?'disabled':''}>›</button>`;
+  document.getElementById('paginBtns').innerHTML=btns;
 }
-function goPage(p) {
-  const pages=Math.ceil(filtered.length/PER_PAGE);
-  if (p<1||p>pages) return;
-  currentPage=p; renderTable(); renderPagination();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+function goStudentPage(p){const pages=Math.ceil(filteredStudents.length/PER_PAGE);if(p<1||p>pages)return;studentPage=p;renderStudentTable();renderStudentPagination();window.scrollTo({top:0,behavior:'smooth'});}
 
-// ── MODAL ──
-function openModal(student=null) {
-  editingId = student ? student.id : null;
-  document.getElementById('modalTitle').innerHTML = student ? 'Studentti <span>ózgertıw</span>' : 'Jańa <span>student</span>';
-  document.getElementById('submitBtn').textContent = student ? 'Saqlaw' : 'Qosıw';
-  clearErrors();
-  if (student) {
-    document.getElementById('f_fio').value    = student.fio||'';
-    document.getElementById('f_phone').value  = student.phone||'';
-    document.getElementById('f_email').value  = student.email||'';
-    document.getElementById('f_dob').value    = student.date_of_birth||'';
-    document.getElementById('f_join').value   = student.join_date||'';
-    document.getElementById('f_active').value = String(student.is_active);
-  } else {
-    ['f_fio','f_phone','f_email','f_dob'].forEach(id => document.getElementById(id).value='');
-    document.getElementById('f_join').value   = new Date().toISOString().split('T')[0];
-    document.getElementById('f_active').value = 'true';
-  }
-  document.getElementById('modalOverlay').classList.add('open');
+// Student modal
+function openStudentModal(id=null){
+  editingStudentId=id;
+  const s=id?allStudents.find(x=>x.id===id):null;
+  document.getElementById('studentModalTitle').innerHTML=s?'Studentti <span>ózgertıw</span>':'Jańa <span>student</span>';
+  document.getElementById('studentSubmitBtn').textContent=s?'Saqlaw':'Qosıw';
+  clearFormErrors('student');
+  if(s){ document.getElementById('f_fio').value=s.fio||''; document.getElementById('f_phone').value=s.phone||''; document.getElementById('f_email').value=s.email||''; document.getElementById('f_dob').value=s.date_of_birth||''; document.getElementById('f_join').value=s.join_date||''; document.getElementById('f_active').value=String(s.is_active); }
+  else{ ['f_fio','f_phone','f_email','f_dob'].forEach(id=>document.getElementById(id).value=''); document.getElementById('f_join').value=new Date().toISOString().split('T')[0]; document.getElementById('f_active').value='true'; }
+  document.getElementById('studentModalOverlay').classList.add('open');
 }
-function openEdit(id) { const s=allStudents.find(x=>x.id===id); if(s) openModal(s); }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); editingId=null; }
-document.getElementById('modalOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+function closeStudentModal(){ document.getElementById('studentModalOverlay').classList.remove('open'); editingStudentId=null; }
+document.getElementById('studentModalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeStudentModal();});
 
-// ── SUBMIT ──
-async function submitForm() {
-  if (!validateForm()) return;
-  const payload = {
-    fio:           document.getElementById('f_fio').value.trim(),
-    phone:         document.getElementById('f_phone').value.trim(),
-    email:         document.getElementById('f_email').value.trim()||null,
-    date_of_birth: document.getElementById('f_dob').value,
-    join_date:     document.getElementById('f_join').value,
-    is_active:     document.getElementById('f_active').value==='true',
-  };
-  const btn=document.getElementById('submitBtn');
-  btn.textContent='Saqlawda...'; btn.disabled=true;
-  try {
-    const url=editingId?`${API}${editingId}/`:API, method=editingId?'PUT':'POST';
+async function submitStudentForm(){
+  if(!validateStudentForm()) return;
+  const payload={fio:document.getElementById('f_fio').value.trim(),phone:document.getElementById('f_phone').value.trim(),email:document.getElementById('f_email').value.trim()||null,date_of_birth:document.getElementById('f_dob').value,join_date:document.getElementById('f_join').value,is_active:document.getElementById('f_active').value==='true'};
+  const btn=document.getElementById('studentSubmitBtn'); btn.textContent='Saqlawda...'; btn.disabled=true;
+  try{
+    const url=editingStudentId?`${STUDENT_API}${editingStudentId}/`:STUDENT_API, method=editingStudentId?'PUT':'POST';
     const res=await apiFetch(url,{method,body:JSON.stringify(payload)});
-    if (!res.ok) { const err=await res.json().catch(()=>({})); throw new Error(JSON.stringify(err).slice(0,100)); }
-    toast(editingId?'Student ózgertildi ✓':'Jańa student qosıldı ✓','success');
-    closeModal(); await loadStudents();
-  } catch(e) { if(e.message!=='UNAUTHORIZED') toast('Qátelik: '+e.message,'error'); }
-  finally { btn.textContent=editingId?'Saqlaw':'Qosıw'; btn.disabled=false; }
+    if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(JSON.stringify(err).slice(0,100));}
+    toast(editingStudentId?'Student ózgertildi ✓':'Jańa student qosıldı ✓','success');
+    closeStudentModal(); await loadStudents();
+  }catch(e){if(e.message!=='UNAUTHORIZED')toast('Qátelik: '+e.message,'error');}
+  finally{btn.textContent=editingStudentId?'Saqlaw':'Qosıw';btn.disabled=false;}
 }
-
-function validateForm() {
-  clearErrors(); let ok=true;
-  if (!document.getElementById('f_fio').value.trim())   { showErr('fio','FIO toltırıw shárt'); ok=false; }
-  if (!document.getElementById('f_phone').value.trim()) { showErr('phone','Telefon toltırıw shárt'); ok=false; }
+function validateStudentForm(){
+  clearFormErrors('student'); let ok=true;
+  if(!document.getElementById('f_fio').value.trim()){showFErr('fio','FIO toltırıw shárt');ok=false;}
+  if(!document.getElementById('f_phone').value.trim()){showFErr('phone','Telefon toltırıw shárt');ok=false;}
   const em=document.getElementById('f_email').value.trim();
-  if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { showErr('email','Email nátıyjeli emes'); ok=false; }
-  if (!document.getElementById('f_dob').value)  { showErr('dob','Tuwılgan kúni toltırıw shárt'); ok=false; }
-  if (!document.getElementById('f_join').value) { showErr('join','Qosılgan kúni toltırıw shárt'); ok=false; }
+  if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showFErr('email','Email nátıyjeli emes');ok=false;}
+  if(!document.getElementById('f_dob').value){showFErr('dob','Tuwılgan kúni toltırıw shárt');ok=false;}
+  if(!document.getElementById('f_join').value){showFErr('join','Qosılgan kúni toltırıw shárt');ok=false;}
   return ok;
 }
-function showErr(f,msg) {
-  document.getElementById('f_'+f).classList.add('error');
-  const e=document.getElementById('e_'+f); if(e){e.textContent=msg;e.classList.add('show');}
-}
-function clearErrors() {
-  ['fio','phone','email','dob','join'].forEach(f=>{
-    const i=document.getElementById('f_'+f); if(i) i.classList.remove('error');
-    const e=document.getElementById('e_'+f); if(e) e.classList.remove('show');
-  });
+function showFErr(f,msg){document.getElementById('f_'+f).classList.add('error');const e=document.getElementById('e_'+f);if(e){e.textContent=msg;e.classList.add('show');}}
+function clearFormErrors(type){
+  if(type==='student') ['fio','phone','email','dob','join'].forEach(f=>{const i=document.getElementById('f_'+f);if(i)i.classList.remove('error');const e=document.getElementById('e_'+f);if(e)e.classList.remove('show');});
+  if(type==='group') ['name','mentor'].forEach(f=>{const i=document.getElementById('g_'+f);if(i)i.classList.remove('error');const e=document.getElementById('ge_'+f);if(e)e.classList.remove('show');});
 }
 
-// ── DELETE ──
-function confirmDelete(id,name) {
-  document.getElementById('confirmMsg').textContent=`"${name}" studentti óshiriw shárt pe?`;
-  document.getElementById('confirmOverlay').classList.add('open');
-  document.getElementById('confirmOkBtn').onclick=()=>doDelete(id);
-}
-function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('open'); }
-async function doDelete(id) {
-  closeConfirm();
-  try {
-    const res=await apiFetch(`${API}${id}/`,{method:'DELETE'});
-    if (!res.ok&&res.status!==204) throw new Error('Server error');
+async function deleteStudent(id){
+  try{
+    const res=await apiFetch(`${STUDENT_API}${id}/`,{method:'DELETE'});
+    if(!res.ok&&res.status!==204) throw new Error('Server error');
     toast('Student óshirildi','success'); await loadStudents();
-  } catch(e) { if(e.message!=='UNAUTHORIZED') toast('Óshirilmedi: '+e.message,'error'); }
+  }catch(e){if(e.message!=='UNAUTHORIZED')toast('Óshirilmedi: '+e.message,'error');}
 }
 
-// ── HELPERS ──
-function calcAge(dob) {
-  if (!dob) return null;
-  const b=new Date(dob),t=new Date();
-  let age=t.getFullYear()-b.getFullYear();
-  if (t<new Date(t.getFullYear(),b.getMonth(),b.getDate())) age--;
-  return age;
+// ══════════════════════════════════
+// GROUPS
+// ══════════════════════════════════
+async function loadGroups(){
+  document.getElementById('groupsContainer').innerHTML=`<div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Júkleniwde...</p></div>`;
+  try{
+    const res=await apiFetch(GROUP_API);
+    if(!res.ok){document.getElementById('groupsContainer').innerHTML=`<div class="empty-state"><div class="icon">⚠️</div><p style="color:var(--danger)">Server qátesi: ${res.status}</p></div>`;return;}
+    const data=await res.json();
+    allGroups=Array.isArray(data)?data:(data.results||[]);
+    document.getElementById('tc-groups').textContent=allGroups.length;
+    updateGroupStats(); renderGroups();
+  }catch(e){if(e.message!=='UNAUTHORIZED')document.getElementById('groupsContainer').innerHTML=`<div class="empty-state"><div class="icon">⚠️</div><p style="color:var(--danger)">Qátelik: ${esc(e.message)}</p></div>`;}
 }
-function formatDate(d) {
-  if (!d) return '—';
-  const [y,m,day]=d.split('-'); return `${day}.${m}.${y}`;
+function updateGroupStats(){
+  document.getElementById('gstat-total').textContent=allGroups.length;
+  document.getElementById('gstat-active').textContent=allGroups.filter(g=>g.is_active).length;
+  const total=allGroups.reduce((s,g)=>s+(g.students?g.students.length:0),0);
+  document.getElementById('gstat-students').textContent=total;
 }
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function toast(msg,type='success') {
+function renderGroups(){
+  const q=document.getElementById('groupSearch').value.toLowerCase();
+  const st=document.getElementById('groupFilterStatus').value;
+  const list=allGroups.filter(g=>{
+    const mq=!q||g.name.toLowerCase().includes(q);
+    const ms=st===''||String(g.is_active)===st;
+    return mq&&ms;
+  });
+  if(!list.length){document.getElementById('groupsContainer').innerHTML=`<div class="empty-state"><div class="icon">👥</div><p>Hesh qanday grup tabılmadı</p></div>`;return;}
+  const mentorMap={}; allMentors.forEach(m=>mentorMap[m.id]=m);
+  document.getElementById('groupsContainer').innerHTML=`<div class="groups-grid">${list.map(g=>{
+    const mentorName=g.mentor?(mentorMap[g.mentor]?esc(mentorMap[g.mentor].name||mentorMap[g.mentor].fio||'Mentor'):'#'+g.mentor):'—';
+    const sc=g.students?g.students.length:0;
+    return `<div class="group-card" onclick="openGroupDrawer(${g.id})">
+      <div class="group-card-head">
+        <div class="group-card-name">
+          ${esc(g.name)}
+          <span class="badge ${g.is_active?'badge-active':'badge-inactive'}" style="font-size:11px"><span class="badge-dot"></span>${g.is_active?'Aktiv':'Aktiv emes'}</span>
+        </div>
+        ${g.description?`<div class="group-card-desc">${esc(g.description)}</div>`:''}
+      </div>
+      <div class="group-card-body">
+        <div class="group-meta">
+          <div class="group-meta-item">👤 ${mentorName}</div>
+          <div class="group-meta-item">🎓 ${sc} student</div>
+        </div>
+        <div class="group-actions" onclick="event.stopPropagation()">
+          <button class="btn btn-ghost btn-xs" onclick="openGroupModal(${g.id})">✏️</button>
+          <button class="btn btn-danger btn-xs" onclick="confirmAction('Grupnı óshiriw shárt pe?','${esc(g.name)}',()=>deleteGroup(${g.id}))">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+async function loadMentors(){
+  try{
+    const res=await apiFetch(TEAMMATE_API);
+    if(!res.ok) return;
+    const data=await res.json();
+    allMentors=Array.isArray(data)?data:(data.results||[]);
+    populateMentorSelect();
+  }catch(e){}
+}
+function populateMentorSelect(){
+  const sel=document.getElementById('g_mentor');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Mentor tańlań —</option>';
+  allMentors.forEach(m=>{
+    const name=m.name||m.fio||`Mentor #${m.id}`;
+    sel.innerHTML+=`<option value="${m.id}">${esc(name)}</option>`;
+  });
+  if(cur) sel.value=cur;
+}
+
+// Group modal
+function openGroupModal(id=null){
+  editingGroupId=id;
+  const g=id?allGroups.find(x=>x.id===id):null;
+  document.getElementById('groupModalTitle').innerHTML=g?'Grupnı <span>ózgertıw</span>':'Jańa <span>grup</span>';
+  document.getElementById('groupSubmitBtn').textContent=g?'Saqlaw':'Qosıw';
+  clearFormErrors('group');
+  populateMentorSelect();
+  if(g){ document.getElementById('g_name').value=g.name||''; document.getElementById('g_desc').value=g.description||''; document.getElementById('g_mentor').value=String(g.mentor||''); document.getElementById('g_active').value=String(g.is_active); }
+  else{ document.getElementById('g_name').value=''; document.getElementById('g_desc').value=''; document.getElementById('g_mentor').value=''; document.getElementById('g_active').value='true'; }
+  document.getElementById('groupModalOverlay').classList.add('open');
+}
+function closeGroupModal(){ document.getElementById('groupModalOverlay').classList.remove('open'); editingGroupId=null; }
+document.getElementById('groupModalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeGroupModal();});
+
+async function submitGroupForm(){
+  clearFormErrors('group'); let ok=true;
+  if(!document.getElementById('g_name').value.trim()){const e=document.getElementById('ge_name');e.textContent='Grup atın toltırıń';e.classList.add('show');document.getElementById('g_name').classList.add('error');ok=false;}
+  if(!document.getElementById('g_mentor').value){const e=document.getElementById('ge_mentor');e.textContent='Mentor tańlaw shárt';e.classList.add('show');document.getElementById('g_mentor').classList.add('error');ok=false;}
+  if(!ok) return;
+  const payload={name:document.getElementById('g_name').value.trim(),description:document.getElementById('g_desc').value.trim()||null,mentor:parseInt(document.getElementById('g_mentor').value),is_active:document.getElementById('g_active').value==='true'};
+  const btn=document.getElementById('groupSubmitBtn'); btn.textContent='Saqlawda...'; btn.disabled=true;
+  try{
+    const url=editingGroupId?`${GROUP_API}${editingGroupId}/`:GROUP_API, method=editingGroupId?'PUT':'POST';
+    const res=await apiFetch(url,{method,body:JSON.stringify(payload)});
+    if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(JSON.stringify(err).slice(0,100));}
+    toast(editingGroupId?'Grup ózgertildi ✓':'Jańa grup qosıldı ✓','success');
+    closeGroupModal(); await loadGroups();
+    // If drawer open — refresh it
+    if(activeGroupId===editingGroupId) openGroupDrawer(editingGroupId);
+  }catch(e){if(e.message!=='UNAUTHORIZED')toast('Qátelik: '+e.message,'error');}
+  finally{btn.textContent=editingGroupId?'Saqlaw':'Qosıw';btn.disabled=false;}
+}
+async function deleteGroup(id){
+  try{
+    const res=await apiFetch(`${GROUP_API}${id}/`,{method:'DELETE'});
+    if(!res.ok&&res.status!==204) throw new Error('Server error');
+    toast('Grup óshirildi','success');
+    if(activeGroupId===id) closeDrawer();
+    await loadGroups();
+  }catch(e){if(e.message!=='UNAUTHORIZED')toast('Óshirilmedi: '+e.message,'error');}
+}
+
+// ══ DRAWER ══
+function openGroupDrawer(id){
+  const g=allGroups.find(x=>x.id===id); if(!g) return;
+  activeGroupId=id;
+  const mentorMap={}; allMentors.forEach(m=>mentorMap[m.id]=m);
+  const mentorObj=g.mentor?mentorMap[g.mentor]:null;
+  const mentorName=mentorObj?(mentorObj.name||mentorObj.fio||'Mentor #'+g.mentor):(g.mentor?'Mentor #'+g.mentor:'—');
+
+  document.getElementById('drawerTitle').innerHTML=`${esc(g.name)} <span>detallı</span>`;
+  document.getElementById('drawerSubtitle').textContent=g.description||'';
+
+  document.getElementById('drawerInfo').innerHTML=`
+    <div class="info-item"><div class="info-item-label">Mentor</div><div class="info-item-val">👤 ${esc(mentorName)}</div></div>
+    <div class="info-item"><div class="info-item-label">Jag'day</div><div class="info-item-val"><span class="badge ${g.is_active?'badge-active':'badge-inactive'}"><span class="badge-dot"></span>${g.is_active?'Aktiv':'Aktiv emes'}</span></div></div>
+    <div class="info-item"><div class="info-item-label">Studentler sani</div><div class="info-item-val" style="color:var(--accent)">${g.students?g.students.length:0}</div></div>
+    <div class="info-item"><div class="info-item-label">Qosılgan kúni</div><div class="info-item-val">${formatDate(g.created_at?g.created_at.split('T')[0]:'')}</div></div>`;
+
+  // populate add-student select: only students NOT already in group
+  const inGroup=new Set((g.students||[]).map(sid=>typeof sid==='object'?sid.id:sid));
+  const addSel=document.getElementById('addStudentSelect');
+  addSel.innerHTML='<option value="">— Student tańlań —</option>';
+  allStudents.filter(s=>!inGroup.has(s.id)&&s.is_active).forEach(s=>{
+    addSel.innerHTML+=`<option value="${s.id}">${esc(s.fio)} — ${esc(s.phone)}</option>`;
+  });
+
+  renderDrawerStudents(g);
+
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('groupDrawer').classList.add('open');
+}
+
+function renderDrawerStudents(g){
+  const students=g.students||[];
+  document.getElementById('drawerStudentCount').textContent=students.length?`(${students.length})`:'';
+  if(!students.length){ document.getElementById('drawerStudentList').innerHTML=`<div style="color:var(--text3);font-size:14px;text-align:center;padding:24px 0">Grupda studentler joq</div>`; return; }
+  // students can be IDs or objects
+  const studentMap={}; allStudents.forEach(s=>studentMap[s.id]=s);
+  document.getElementById('drawerStudentList').innerHTML=students.map(sid=>{
+    const id=typeof sid==='object'?sid.id:sid;
+    const s=studentMap[id]||{id,fio:'Student #'+id,phone:'—'};
+    return `<div class="drawer-student-item">
+      <div class="student-avatar">${esc(s.fio[0]||'S')}</div>
+      <div class="student-info"><div class="student-name">${esc(s.fio)}</div><div class="student-phone">${esc(s.phone)}</div></div>
+      <button class="btn btn-danger btn-xs" onclick="removeStudentFromGroup(${id})" title="Grupdan alıp taslaw">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function closeDrawer(){
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('groupDrawer').classList.remove('open');
+  activeGroupId=null;
+}
+
+async function addStudentToGroup(){
+  const studentId=parseInt(document.getElementById('addStudentSelect').value);
+  if(!studentId||!activeGroupId){toast('Student tańlań','error');return;}
+  const g=allGroups.find(x=>x.id===activeGroupId); if(!g) return;
+  const currentIds=(g.students||[]).map(s=>typeof s==='object'?s.id:s);
+  if(currentIds.includes(studentId)){toast('Bu student grupda bar','error');return;}
+  const newIds=[...currentIds,studentId];
+  try{
+    const res=await apiFetch(`${GROUP_API}${activeGroupId}/`,{method:'PATCH',body:JSON.stringify({students:newIds})});
+    if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(JSON.stringify(err).slice(0,80));}
+    toast('Student grupga qosıldı ✓','success');
+    await loadGroups();
+    const updated=allGroups.find(x=>x.id===activeGroupId);
+    if(updated) openGroupDrawer(activeGroupId);
+  }catch(e){if(e.message!=='UNAUTHORIZED')toast('Qosılmadı: '+e.message,'error');}
+}
+
+async function removeStudentFromGroup(studentId){
+  if(!activeGroupId) return;
+  const g=allGroups.find(x=>x.id===activeGroupId); if(!g) return;
+  const newIds=(g.students||[]).map(s=>typeof s==='object'?s.id:s).filter(id=>id!==studentId);
+  try{
+    const res=await apiFetch(`${GROUP_API}${activeGroupId}/`,{method:'PATCH',body:JSON.stringify({students:newIds})});
+    if(!res.ok) throw new Error('Server error');
+    toast('Student grupdan alındı','success');
+    await loadGroups();
+    const updated=allGroups.find(x=>x.id===activeGroupId);
+    if(updated) openGroupDrawer(activeGroupId);
+  }catch(e){if(e.message!=='UNAUTHORIZED')toast('Alınmadı: '+e.message,'error');}
+}
+
+// ══ CONFIRM ══
+function confirmAction(question,name,cb){
+  document.getElementById('confirmMsg').textContent=`"${name}" — ${question}`;
+  document.getElementById('confirmOverlay').classList.add('open');
+  document.getElementById('confirmOkBtn').onclick=()=>{ closeConfirm(); cb(); };
+}
+function closeConfirm(){ document.getElementById('confirmOverlay').classList.remove('open'); }
+
+// ══ HELPERS ══
+function calcAge(dob){ if(!dob) return null; const b=new Date(dob),t=new Date(); let age=t.getFullYear()-b.getFullYear(); if(t<new Date(t.getFullYear(),b.getMonth(),b.getDate())) age--; return age; }
+function formatDate(d){ if(!d||d==='—') return '—'; const [y,m,day]=d.split('-'); if(!y||!m||!day) return d; return `${day}.${m}.${y}`; }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg,type='success'){
   const wrap=document.getElementById('toast');
   const el=document.createElement('div');
   el.className=`toast-item ${type}`;
