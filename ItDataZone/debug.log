@@ -181,3 +181,6 @@ django.db.utils.OperationalError: no such table: course_course
 "GET /api/v1/user/student/ HTTP/1.1" 200 52
 "GET /api/v1/group/ HTTP/1.1" 200 52
 "GET /api/v1/teammate/ HTTP/1.1" 200 52
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 25632
+"GET /teammates/ HTTP/1.1" 200 11690
