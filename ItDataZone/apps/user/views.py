@@ -47,3 +47,9 @@ class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method == "GET":
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
+
+
+class PageNotFoundView(APIView):
+    permissions_classes = [permissions.AllowAny]
+    def get(self, request, *args, **kwargs):
+        return render(request, '404.html')

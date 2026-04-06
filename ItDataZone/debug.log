@@ -184,3 +184,35 @@ django.db.utils.OperationalError: no such table: course_course
 Watching for file changes with StatReloader
 "GET / HTTP/1.1" 200 25632
 "GET /teammates/ HTTP/1.1" 200 11690
+Watching for file changes with StatReloader
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+"GET /asdad/ HTTP/1.1" 200 4929
+"GET /asdad/ HTTP/1.1" 200 4929
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /asdad/asdfdsf/ HTTP/1.1" 200 4929
+Not Found: /asdad/asdfdsf/asd/
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 404 5553
+Not Found: /asdad/asdfdsf/asd/
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 404 5553
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 200 4929
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 200 4929
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 200 4929
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 200 4929
+"GET /asdad/asdfdsf/asd/ HTTP/1.1" 200 4929
+Not Found: /asdad/asd/
+"GET /asdad/asd/ HTTP/1.1" 404 5386
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /asdad/asd/ HTTP/1.1" 200 4929
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"GET /asdad/asd/asdsd/asdsda/ HTTP/1.1" 200 4929
