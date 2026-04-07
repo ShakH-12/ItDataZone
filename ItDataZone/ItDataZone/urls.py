@@ -13,11 +13,6 @@ handler404 = 'apps.user.views.custom_404'
 urlpatterns = [
     path("6cUzHRjpuLeURg/", admin.site.urls),
     path("", include("apps.main.urls")),
-    path("<first>/", PageNotFoundView.as_view()),
-    path("<first>/<second>/", PageNotFoundView.as_view()),
-    path("<first>/<second>/<third>/", PageNotFoundView.as_view()),
-    path("<first>/<second>/<third>/<fifth>/", PageNotFoundView.as_view()),
-    path("<first>/<second>/<third>/<fifth>/<sixth>/", PageNotFoundView.as_view()),
 
     path("api/v1/user/", include("apps.user.urls")),
     path("api/v1/bot/", include("apps.bot.urls")),
@@ -27,6 +22,13 @@ urlpatterns = [
 
     path("api/token/", TokenObtainPairView.as_view()),
     path("api/refresh/", TokenRefreshView.as_view()),
+
+
+    path("<first>/", PageNotFoundView.as_view()),
+    path("<first>/<second>/", PageNotFoundView.as_view()),
+    path("<first>/<second>/<third>/", PageNotFoundView.as_view()),
+    path("<first>/<second>/<third>/<fifth>/", PageNotFoundView.as_view()),
+    path("<first>/<second>/<third>/<fifth>/<sixth>/", PageNotFoundView.as_view()),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

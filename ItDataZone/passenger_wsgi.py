@@ -1,0 +1,1 @@
+from ItDataZone.wsgi import application

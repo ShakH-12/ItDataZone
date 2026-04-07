@@ -216,3 +216,61 @@ Watching for file changes with StatReloader
 C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
 Watching for file changes with StatReloader
 "GET /asdad/asd/asdsd/asdsda/ HTTP/1.1" 200 4929
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 25632
+"GET /favicon.ico HTTP/1.1" 301 0
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /certificates/ HTTP/1.1" 200 4699
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /certificates/ HTTP/1.1" 200 4699
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /certificates/ HTTP/1.1" 200 4724
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /teammates/ HTTP/1.1" 200 11688
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET / HTTP/1.1" 200 25632
+"GET /favicon.ico/ HTTP/1.1" 200 4929
+"GET /reception/ HTTP/1.1" 200 57192
+Unauthorized: /api/v1/user/student/
+Unauthorized: /api/v1/teammate/
+Unauthorized: /api/v1/group/
+"GET /api/v1/user/student/ HTTP/1.1" 401 172
+"GET /api/v1/group/ HTTP/1.1" 401 172
+"GET /api/v1/teammate/ HTTP/1.1" 401 172
+Method Not Allowed: /api/token/refresh/
+Too Many Requests: /api/token/refresh/
+Too Many Requests: /api/token/refresh/
+"POST /api/token/refresh/ HTTP/1.1" 405 41
+"POST /api/token/refresh/ HTTP/1.1" 429 68
+"POST /api/token/refresh/ HTTP/1.1" 429 68
+Too Many Requests: /favicon.ico/
+"GET /favicon.ico/ HTTP/1.1" 429 68
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+Method Not Allowed: /api/token/
+"POST /api/token/ HTTP/1.1" 405 41
+C:\Users\user\PycharmProjects\ItDataZone\ItDataZone\ItDataZone\urls.py changed, reloading.
+Watching for file changes with StatReloader
+"POST /api/token/ HTTP/1.1" 200 489
+"GET /api/v1/group/ HTTP/1.1" 200 52
+"GET /api/v1/user/student/ HTTP/1.1" 200 52
+"GET /api/v1/teammate/ HTTP/1.1" 200 52
